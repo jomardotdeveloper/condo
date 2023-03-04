@@ -11,19 +11,19 @@
             array('name' => 'Clusters', 'url' => route('clusters.index')),
             array('name' => 'Units', 'url' => route('units.index')),
             array('name' => 'Roles', 'url' => '#'),
-            array('name' => 'Users', 'url' => '#'),
+            array('name' => 'Employees', 'url' =>  route('employees.index')),
         ]"/>
 
         <x-menu name="Move In" logo="icon ni ni-home-fill" url="#" :is-parent="true" :children="[
-            array('name' => 'New Applications', 'url' => '#'),
-            array('name' => 'For Payments', 'url' => '#'),
-            array('name' => 'Lobby Guard', 'url' => '#'),
+            array('name' => 'New Applications', 'url' =>  route('applications.index')  . '?status=1'),
+            array('name' => 'For Payments', 'url' =>  route('applications.index')  . '?status=2'),
+            array('name' => 'Lobby Guard', 'url' =>  route('applications.index')  . '?status=3'),
         ]"/>
 
         <x-menu name="Move Out" logo="icon ni ni-delete-fill" url="#" :is-parent="true" :children="[
-            array('name' => 'New Applications', 'url' => '#'),
-            array('name' => 'For Payments', 'url' => '#'),
-            array('name' => 'Lobby Guard', 'url' => '#'),
+            array('name' => 'New Applications', 'url' =>  route('move-outs.index')  . '?status=1'),
+            array('name' => 'For Payments', 'url' =>  route('move-outs.index')  . '?status=2'),
+            array('name' => 'Lobby Guard', 'url' =>  route('move-outs.index')  . '?status=3'),
         ]"/>
     </ul>
 </div>

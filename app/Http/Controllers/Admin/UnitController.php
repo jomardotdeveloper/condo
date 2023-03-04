@@ -55,9 +55,11 @@ class UnitController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Unit $unit)
     {
-        //
+        return view('admin.units.show', [
+            'unit' => $unit,
+        ]);
     }
 
     /**

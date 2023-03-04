@@ -17,4 +17,10 @@ return [
         5 => 'Re-open', 
         6 => 'EELHI'
     ],
+    'application_status' => [
+        1 => 'New Application', 
+        2 => 'For Payment', 
+        3 => 'Lobby Guard',
+        4 => 'Done'
+    ],
 ];
