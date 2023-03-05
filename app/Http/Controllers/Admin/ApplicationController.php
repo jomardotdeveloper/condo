@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Application;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 
 class ApplicationController extends Controller
@@ -30,7 +31,10 @@ class ApplicationController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.applications.create', [
+            'units' => $this->getSelectOptions(Unit::class),
+            'resident_types' => $this->getResidentTypeOptions(),
+        ]);
     }
 
     /**
@@ -71,5 +75,19 @@ class ApplicationController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function getResidentTypeOptions()
+    {
+        return [
+            [
+                'id' => 1,
+                'name' => 'Unit Owner',
+            ],
+            [
+                'id' => 2,
+                'name' => 'Tenant',
+            ],
+        ];
     }
 }

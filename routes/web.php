@@ -22,9 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    // return view('layouts.admin.master');
-    return redirect()->route('error.maintenance');
-
+    return view('layouts.admin.master');
 });
 
 // ROUTE FOR ERRORS
