@@ -40,6 +40,7 @@
         @endforeach
     </div>
 </div>
+
 <div class="col-6 mt-2" id="unit_owner_checklist">
     <div class="row">
         <div class="col-12" >
