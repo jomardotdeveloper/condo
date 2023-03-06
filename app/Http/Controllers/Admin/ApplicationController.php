@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Application;
+use App\Models\MoveIn;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 
@@ -32,7 +33,7 @@ class ApplicationController extends Controller
     public function create()
     {
         return view('admin.applications.create', [
-            'units' => $this->getSelectOptions(Unit::class),
+            'units' => $this->getSelectOptions(Unit::class, "unit_number"),
             'resident_types' => $this->getResidentTypeOptions(),
         ]);
     }
@@ -42,7 +43,41 @@ class ApplicationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $values = $request->all();
+
+
+        
+        if(array_key_exists("unit_owner_checklists" , $values))
+            $values["unit_owner_checklists"] = implode(",", $values["unit_owner_checklists"]);
+
+        if(array_key_exists("unit_tenant_checklists" , $values))
+            $values["unit_tenant_checklists"] = implode(",", $values["unit_tenant_checklists"]);
+
+        if(array_key_exists("charges_checklists" , $values))
+            $values["charges_checklists"] = implode(",", $values["charges_checklists"]);
+
+        if(array_key_exists("charges_remarks" , $values))
+            $values["charges_remarks"] = implode(",", $values["charges_remarks"]);
+
+        if(array_key_exists("signature_checklists" , $values))
+            $values["signature_checklists"] = implode(",", $values["signature_checklists"]);
+
+        
+
+
+        $move_in = MoveIn::create($values);
+
+        $application = Application::create([
+            'first_name' => $values['first_name'],
+            'last_name' => $values['last_name'],
+            'middle_name' => $values['middle_name'],
+            'is_owner' => $values['resident_type'] == "1" ? true : false,
+            'unit_id' => $values['unit_id'],
+            'move_in_id' => $move_in->id,
+            'status' => 1,
+        ]);
+
+        return redirect()->route('applications.index', ['status' => 1])->with('success', 'Application created successfully.');
     }
 
     /**

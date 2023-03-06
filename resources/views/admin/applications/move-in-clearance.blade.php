@@ -13,7 +13,15 @@
 </div>
 
 <div class="col-6 mt-2">
-    <x-select name="unit" label="Unit" :options="$units" :is-required="true"/>
+    <x-input name="move_in_date" label="Date of Move-In" type="date" :is-required="true"/>
+</div>
+
+<div class="col-6 mt-2">
+    <x-input name="number_of_person" label="No. of Person(s) to move-in" type="number" :is-required="true"/>
+</div>
+
+<div class="col-6 mt-2">
+    <x-select name="unit_id" label="Unit" :options="$units" :is-required="true"/>
 </div>
 
 <div class="col-6 mt-2">
