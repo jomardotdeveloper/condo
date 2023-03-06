@@ -14,4 +14,20 @@ return [
         3 => 'Utility Bond',
         4 => 'Resident Information Sheet Form',
     ],
+    'charges_checklists' => [
+        1 => 'Asssociation/ Parking Dues',
+        2 => 'Water',
+        3 => 'Electric',
+        4 => 'Amenity/ies Use',
+        5 => 'Violation Ticket',
+        6 => 'Others (Please specify)',
+    ],
+    'signature_checklists' => [
+        1 => 'Work Permit (Minor Works Only)',
+        2 => 'Concern Slip',
+        3 => 'Gate Pass INCOMING Items Only',
+        4 => 'Amenities Room Reservation',
+        5 => 'Visitors Pass Form',
+        6 => 'Others (Please specify)',
+    ],
 ];

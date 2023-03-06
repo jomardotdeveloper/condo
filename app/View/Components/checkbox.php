@@ -10,13 +10,15 @@ class checkbox extends Component
 {
     public $name;
     public $label;
+    public $isChecked;
     /**
      * Create a new component instance.
      */
-    public function __construct( $name, $label)
+    public function __construct( $name, $label, $isChecked=false)
     {
         $this->name = $name;
         $this->label = $label;
+        $this->isChecked = $isChecked;
     }
 
 
@@ -28,6 +30,7 @@ class checkbox extends Component
         return view('components.checkbox', [
             'name' => $this->name,
             'label' => $this->label,
+            'isChecked' => $this->isChecked,
         ]);
     }
 }

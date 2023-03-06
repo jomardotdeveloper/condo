@@ -27,8 +27,6 @@ class ResidentInformation extends Model
         'househelper_driver_lines',
         'requested_by',
         'noted_by',
-        'user_id',
-        'unit_id'
     ];
 
     public function user()

@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('middle_name')->nullable();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('unit_id')->constrained('units')->onDelete('cascade');
-            $table->foreignId('move_in_id')->constrained('move_ins')->onDelete('cascade');
-            $table->foreignId('resident_information_id')->constrained('resident_informations')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('unit_id')->nullable()->constrained('units')->onDelete('set null');
+            $table->foreignId('move_in_id')->nullable()->constrained('move_ins')->onDelete('cascade');
+            $table->foreignId('resident_information_id')->nullable()->constrained('resident_informations')->onDelete('cascade');
             $table->enum('status', array_keys(config('enums.application_status')));
             $table->timestamps();
         });

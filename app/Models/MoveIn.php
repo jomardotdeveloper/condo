@@ -25,8 +25,6 @@ class MoveIn extends Model
         'verified_by',
         'noted_by',
         'additional_instruction',
-        'user_id',
-        'unit_id',
     ];
 
     public function user()

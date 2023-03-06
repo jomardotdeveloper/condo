@@ -30,8 +30,6 @@ return new class extends Migration
             $table->string('househelper_driver_lines')->nullable();
             $table->string('requested_by')->nullable();
             $table->string('noted_by')->nullable();
-            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
-            $table->foreignId('unit_id')->nullable()->constrained('units')->onDelete('set null');
             $table->timestamps();
         });
     }
