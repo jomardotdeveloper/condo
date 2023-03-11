@@ -25,5 +25,20 @@
             array('name' => 'For Payments', 'url' =>  route('move-outs.index')  . '?status=2'),
             array('name' => 'Lobby Guard', 'url' =>  route('move-outs.index')  . '?status=3'),
         ]"/>
+
+        <li class="nk-menu-heading">
+            <h6 class="overline-title text-primary-alt">List of Owners</h6>
+        </li>
+
+        <x-menu name="Owners" logo="icon ni ni-user-fill" url="#"/>
+        <x-menu name="Tenants" logo="icon ni ni-users-fill" url="#"/>
+
+        <li class="nk-menu-heading">
+            <h6 class="overline-title text-primary-alt">Finance</h6>
+        </li>
+
+        <x-menu name="Invoices" logo="icon ni ni-file-docs" url="{{ route('invoices.index') }}"/>
+        <x-menu name="Payments" logo="icon ni ni-wallet-fill" url="{{ route('payments.index') }}"/>
+        
     </ul>
 </div>

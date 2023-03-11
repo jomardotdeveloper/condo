@@ -17,12 +17,32 @@
 
     <div class="card card-bordered card-preview">
         <div class="card-inner">
-            <form action="{{ route('applications.store') }}" class="row" method="POST">
+            <form action="{{ route('applications.store') }}" method="POST">
                 @csrf
-                @include('admin.applications.move-in-clearance')
-                <div class="col-12 mt-2">
-                    <input type="submit" value="Submit" class="btn btn-primary" />
+                <ul class="nav nav-tabs mt-n4">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#tabItem1">Move In Clearance Form</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#tabItem2">Resident's Information Sheet</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tabItem1">
+                        <div class="row">
+                            @include('admin.applications.move-in-clearance')
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tabItem2">
+                        <div class="row">
+                            @include('admin.applications.resident-information')
+                            <div class="col-12 mt-2">
+                                <input type="submit" value="Submit" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            
             </form>
         </div>
     </div>

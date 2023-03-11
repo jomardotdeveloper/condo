@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\MoveOutController;
 use App\Http\Controllers\Admin\PositionController;
 use App\Http\Controllers\Admin\UnitController;
 use App\Http\Controllers\ErrorController;
+use App\Http\Controllers\Admin\InvoiceController;
+use App\Http\Controllers\Admin\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,15 +24,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('layouts.admin.master');
-});
+    return view('admin.login');
+})->name('login');
 
 // ROUTE FOR ERRORS
 Route::get('503', ErrorController::class . '@maintenance')->name('error.maintenance');
 Route::get('404', ErrorController::class . '@notFound')->name('error.not-found');
 
 
-Route::prefix("/admin")->group(function () {
+// ROUTE FOR AUTHENTICATION
+Route::post('/admin/login', [App\Http\Controllers\Admin\LoginController::class, 'authenticate'])->name('admin.login');
+
+
+Route::prefix("/admin")->middleware('auth')->group(function () {
     Route::resource('positions', PositionController::class);
     Route::resource('departments', DepartmentController::class);
     Route::resource('clusters', ClusterController::class);
@@ -38,6 +44,12 @@ Route::prefix("/admin")->group(function () {
     Route::resource('employees', EmployeeController::class);
     Route::resource('move-outs', MoveOutController::class);
     Route::resource('applications', ApplicationController::class);
+    Route::resource('invoices', InvoiceController::class);
+    Route::resource('payments', PaymentController::class);
+
+
+
     // API
+    Route::post('applications/{application}/move-to-status', [ApplicationController::class, 'moveToStatus'])->name('applications.move-status');
     Route::get('clusters/unit-towers/{cluster}', [ClusterController::class, 'getUnitTowers'])->name('clusters.unit-towers');
 });

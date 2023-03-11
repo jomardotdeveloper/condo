@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Application;
 use App\Models\MoveIn;
+use App\Models\ResidentInformation;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 
@@ -15,6 +16,7 @@ class ApplicationController extends Controller
      */
     public function index()
     {
+        
         $status_ids = array_keys(config('enums.application_status'));
 
         if(!isset($_GET['status'])) {
@@ -23,8 +25,10 @@ class ApplicationController extends Controller
             return $this->redirectTo404();
         }
 
+        $title =config('enums.application_status')[$_GET['status']];
+
         $applications = Application::where('status', $_GET['status'])->get()->all();
-        return view('admin.applications.index', compact('applications'));
+        return view('admin.applications.index', compact('applications', 'title'));
     }
 
     /**
@@ -35,6 +39,8 @@ class ApplicationController extends Controller
         return view('admin.applications.create', [
             'units' => $this->getSelectOptions(Unit::class, "unit_number"),
             'resident_types' => $this->getResidentTypeOptions(),
+            'gender' => $this->getEnumSelectOptions(config('enums.gender')),
+            'marital_status' => $this->getEnumSelectOptions(config('enums.marital_status')),
         ]);
     }
 
@@ -43,9 +49,18 @@ class ApplicationController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'marital_status' => 'required',
+            'gender' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'move_in_date' => 'required',
+            'number_of_person' => 'required',
+            'unit_id' => 'required',
+            'resident_type' => 'required',
+        ]);
+
         $values = $request->all();
-
-
         
         if(array_key_exists("unit_owner_checklists" , $values))
             $values["unit_owner_checklists"] = implode(",", $values["unit_owner_checklists"]);
@@ -62,10 +77,30 @@ class ApplicationController extends Controller
         if(array_key_exists("signature_checklists" , $values))
             $values["signature_checklists"] = implode(",", $values["signature_checklists"]);
 
-        
+        if(array_key_exists("authorized_unit_occupant_names" , $values))
+            $values["authorized_unit_occupant_names"] = implode(",", $values["authorized_unit_occupant_names"]);
+
+        if(array_key_exists("authorized_unit_occupant_relations" , $values))
+            $values["authorized_unit_occupant_relations"] = implode(",", $values["authorized_unit_occupant_relations"]);
+
+        if(array_key_exists("authorized_unit_occupant_ages" , $values))
+            $values["authorized_unit_occupant_ages"] = implode(",", $values["authorized_unit_occupant_ages"]);
+
+        if(array_key_exists("authorized_unit_occupant_remarks" , $values))
+            $values["authorized_unit_occupant_remarks"] = implode(",", $values["authorized_unit_occupant_remarks"]);
+
+        if(array_key_exists("househelper_driver_names" , $values))
+            $values["househelper_driver_names"] = implode(",", $values["househelper_driver_names"]);
+
+        if(array_key_exists("househelper_driver_ages" , $values))
+            $values["househelper_driver_ages"] = implode(",", $values["househelper_driver_ages"]);
+
+        if(array_key_exists("househelper_driver_remarks" , $values))
+            $values["househelper_driver_remarks"] = implode(",", $values["househelper_driver_remarks"]);
 
 
         $move_in = MoveIn::create($values);
+        $resident = ResidentInformation::create($values);
 
         $application = Application::create([
             'first_name' => $values['first_name'],
@@ -75,6 +110,7 @@ class ApplicationController extends Controller
             'unit_id' => $values['unit_id'],
             'move_in_id' => $move_in->id,
             'status' => 1,
+            'resident_information_id' => $resident->id,
         ]);
 
         return redirect()->route('applications.index', ['status' => 1])->with('success', 'Application created successfully.');
@@ -126,5 +162,14 @@ class ApplicationController extends Controller
                 'name' => 'Tenant',
             ],
         ];
+    }
+
+    public function moveToStatus(Request $request, Application $application) {
+        $values = $request->all();
+
+        $application->status = $values['status'];
+        $application->save();
+
+        return redirect()->route('applications.index', ['status' => $values['status']])->with('success', 'Application moved to status successfully.');
     }
 }

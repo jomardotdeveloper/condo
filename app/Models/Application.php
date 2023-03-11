@@ -9,6 +9,11 @@ class Application extends Model
 {
     use HasFactory;
 
+    public const NEW_APPLICATION = 1;
+    public const FOR_PAYMENT = 2;
+    public const LOBBY_GUARD = 3;
+    public const DONE = 4;
+
     protected $fillable = [
         'first_name',
         'last_name',

@@ -1,7 +1,7 @@
 <h6 class="title overline-title text-base">MOVE-IN CLEARANCE FORM</h6>
 
 <div class="col-4">
-    <x-input name="first_name" label="First Name" type="text" :is-required="true"/>
+    <x-input name="first_name" label="First Name" type="text" default-value="{{request()->old('first_name')}}"/>
 </div>
 
 <div class="col-4">
@@ -9,23 +9,23 @@
 </div>
 
 <div class="col-4">
-    <x-input name="last_name" label="Last Name" type="text" :is-required="true"/>
+    <x-input name="last_name" label="Last Name" type="text" />
 </div>
 
 <div class="col-6 mt-2">
-    <x-input name="move_in_date" label="Date of Move-In" type="date" :is-required="true"/>
+    <x-input name="move_in_date" label="Date of Move-In" type="date" />
 </div>
 
 <div class="col-6 mt-2">
-    <x-input name="number_of_person" label="No. of Person(s) to move-in" type="number" :is-required="true"/>
+    <x-input name="number_of_person" label="No. of Person(s) to move-in" type="number" />
 </div>
 
 <div class="col-6 mt-2">
-    <x-select name="unit_id" label="Unit" :options="$units" :is-required="true"/>
+    <x-select name="unit_id" label="Unit" :options="$units" />
 </div>
 
 <div class="col-6 mt-2">
-    <x-select name="resident_type" label="Unit owner or Tenant" :options="$resident_types" :is-required="true"/>
+    <x-select name="resident_type" label="Unit owner or Tenant" :options="$resident_types" />
 </div>
 
 <div class="col-6 mt-2" id="tenant_checklist">

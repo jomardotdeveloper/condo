@@ -8,12 +8,16 @@ use Illuminate\View\Component;
 
 class TableLine extends Component
 {
+    public $columns ;
+    public $initialData;
+
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(  $columns,  $initialData )
     {
-        //
+        $this->columns = $columns;
+        $this->initialData = $initialData;
     }
 
     /**
@@ -21,6 +25,9 @@ class TableLine extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.table-line');
+        return view('components.table-line', [
+            'columns' => $this->columns,
+            'initialData' => $this->initialData,
+        ]);
     }
 }

@@ -23,4 +23,20 @@ return [
         3 => 'Lobby Guard',
         4 => 'Done'
     ],
+    'payment_status' => [
+        1 => 'Pending', 
+        2 => 'Paid', 
+        3 => 'Rejected'
+    ],
+
+    'marital_status' => [
+        1 => 'Single',
+        2 => 'Married',
+        3 => 'Widowed',
+    ], 
+
+    'gender' => [
+        1 => 'Male',
+        2 => 'Female'
+    ]
 ];

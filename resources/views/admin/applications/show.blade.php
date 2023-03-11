@@ -15,8 +15,13 @@
     @include('admin.includes.alerts')
 
     {{-- CREATE BUTTON --}}
-    <a href="{{ route('applications.create') }}"  class="btn btn-primary d-none d-md-inline-flex mb-2">Move to </a>
-    <a href="{{ route('applications.create') }}"  class="btn btn-primary d-none d-md-inline-flex mb-2">Payment</a>
+    <form method="POST" action="{{ route('applications.move-status', ['application' => $application]) }}">
+        @csrf
+        <input type="hidden" name="status" value="2">
+        <button type="submit" class="btn btn-primary d-none d-md-inline-flex mb-2">Move to For Payment </button>
+    </form>
+    {{-- <a href="{{ route('applications.create') }}"  class="btn btn-primary d-none d-md-inline-flex mb-2">Move to For Payment </a>
+    <a href="{{ route('applications.create') }}"  class="btn btn-primary d-none d-md-inline-flex mb-2">Payment</a> --}}
 
 
     <div class="card">

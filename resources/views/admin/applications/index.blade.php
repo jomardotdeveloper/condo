@@ -4,7 +4,7 @@
     {{-- BREADCRUMB --}}
     <x-breadcrumb :items="[
         array('name' => 'Move In', 'url' => 'javascript:void(0);'),
-        array('name' => 'Applications', 'url' => route('departments.index')),
+        array('name' => $title, 'url' => route('departments.index')),
     ]"/>
 
     {{-- TITLE --}}
