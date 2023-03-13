@@ -35,7 +35,7 @@
         </div>
         @foreach (config('checklists.move_in_tenant_checklists') as $key => $val )
             <div class="col-12">
-                <x-checkbox name="unit_tenant_checklists[]" value="{{ $key }}" label="{{ $val }}" />
+                <x-checkbox name="unit_tenant_checklists[]" value="{{ $key }}" label="{{ $val }}" :is-checked="false"/>
             </div>
         @endforeach
     </div>
@@ -48,7 +48,7 @@
         </div>
         @foreach (config('checklists.move_in_owner_checklists') as $key => $val )
             <div class="col-12">
-                <x-checkbox name="unit_owner_checklists[]" value="{{ $key }}" label="{{ $val }}" />
+                <x-checkbox name="unit_owner_checklists[]" value="{{ $key }}" label="{{ $val }}" :is-checked="false"/>
             </div>
         @endforeach
     </div>
@@ -74,7 +74,7 @@
             @foreach (config('checklists.charges_checklists') as $key => $value)
             <tr>
                 <td>
-                    <x-checkbox name="charges_checklists[]" value="{{ $key }}" label="{{ $value }}" />
+                    <x-checkbox name="charges_checklists[]" value="{{ $key }}" label="{{ $value }}" :is-checked="false"/>
                 </td>
                 <td>
                     <x-input name="charges_remarks[]" label="Remarks" type="text" />
@@ -93,7 +93,7 @@
         </div>
         @foreach (config('checklists.signature_checklists') as $key => $val )
             <div class="col-6">
-                <x-checkbox name="signature_checklists[]" value="{{ $key }}" label="{{ $val }}" />
+                <x-checkbox name="signature_checklists[]" value="{{ $key }}" label="{{ $val }}" :is-checked="false"/>
             </div>
         @endforeach
     </div>
