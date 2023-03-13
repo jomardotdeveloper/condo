@@ -37,7 +37,7 @@ Route::get('404', ErrorController::class . '@notFound')->name('error.not-found')
 
 // ROUTE FOR AUTHENTICATION
 Route::post('/admin/login', [App\Http\Controllers\Admin\LoginController::class, 'authenticate'])->name('admin.login');
-
+Route::resource('applications', ApplicationController::class);
 
 Route::prefix("/admin")->middleware('auth')->group(function () {
     Route::resource('positions', PositionController::class);
@@ -46,7 +46,7 @@ Route::prefix("/admin")->middleware('auth')->group(function () {
     Route::resource('units', UnitController::class);
     Route::resource('employees', EmployeeController::class);
     Route::resource('move-outs', MoveOutController::class);
-    Route::resource('applications', ApplicationController::class);
+    
     Route::resource('invoices', InvoiceController::class);
     Route::resource('payments', PaymentController::class);
 
