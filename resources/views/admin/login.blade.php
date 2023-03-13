@@ -32,7 +32,6 @@
             <div class="form-group">
                 <div class="form-label-group">
                     <label class="form-label" for="password">Passcode</label>
-                    <a class="link link-primary link-sm" tabindex="-1" href="html/pages/auths/auth-reset.html">Forgot Code?</a>
                 </div>
                 <div class="form-control-wrap">
                     <a tabindex="-1" href="#" class="form-icon form-icon-right passcode-switch lg" data-target="password">
@@ -44,6 +43,7 @@
             </div><!-- .form-group -->
             <div class="form-group">
                 <button type="submit" class="btn btn-lg btn-primary btn-block">Sign in</button>
+                <a href="{{ route('application') }}" class="btn btn-lg btn-primary btn-block mt-2">Submit Application</a>
             </div>
         </form><!-- form -->
     </div><!-- .nk-block -->

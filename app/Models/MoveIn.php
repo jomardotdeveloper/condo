@@ -36,4 +36,66 @@ class MoveIn extends Model
     {
         return $this->belongsTo(Unit::class);
     }
+
+    public function getUnitOwnerChecklistsArrAttribute() {
+        $checklists = $this->unit_owner_checklists;
+
+        if(!$checklists)
+            return [];
+        
+        if(strpos($checklists, ',') === false)
+            return [$checklists];
+
+        return explode(',', $checklists);
+    }
+
+    public function getUnitTenantChecklistsArrAttribute() {
+        $checklists = $this->unit_tenant_checklists;
+
+        if(!$checklists)
+            return [];
+        
+        if(strpos($checklists, ',') === false)
+            return [$checklists];
+
+        return explode(',', $checklists);
+    }
+
+
+    public function getChargesChecklistsArrAttribute() {
+        $checklists = $this->charges_checklists;
+
+        if(!$checklists)
+            return [];
+        
+        if(strpos($checklists, ',') === false)
+            return [$checklists];
+
+        return explode(',', $checklists);
+    }
+
+
+    public function getChargesRemarksArrAttribute() {
+        $checklists = $this->charges_remarks;
+
+        if(!$checklists)
+            return [];
+        
+        if(strpos($checklists, ',') === false)
+            return [$checklists];
+
+        return explode(',', $checklists);
+    }
+
+    public function getSignatureChecklistsArrAttribute() {
+        $checklists = $this->signature_checklists;
+
+        if(!$checklists)
+            return [];
+        
+        if(strpos($checklists, ',') === false)
+            return [$checklists];
+
+        return explode(',', $checklists);
+    }
 }

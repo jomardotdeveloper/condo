@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\PositionController;
 use App\Http\Controllers\Admin\UnitController;
 use App\Http\Controllers\ErrorController;
 use App\Http\Controllers\Admin\InvoiceController;
+use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\PaymentController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('admin.login');
 })->name('login');
+
+Route::get('/application', [LoginController::class, 'application'])->name('application');
 
 // ROUTE FOR ERRORS
 Route::get('503', ErrorController::class . '@maintenance')->name('error.maintenance');

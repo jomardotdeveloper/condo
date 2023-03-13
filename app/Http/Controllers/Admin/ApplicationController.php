@@ -113,6 +113,8 @@ class ApplicationController extends Controller
             'resident_information_id' => $resident->id,
         ]);
 
+        if($request->from_frontend)
+            return redirect()->route('application', ['success' => 1]);
         return redirect()->route('applications.index', ['status' => 1])->with('success', 'Application created successfully.');
     }
 
@@ -129,17 +131,100 @@ class ApplicationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Application $application)
     {
-        //
+        return view('admin.applications.edit', [
+            'units' => $this->getSelectOptions(Unit::class, "unit_number"),
+            'resident_types' => $this->getResidentTypeOptions(),
+            'gender' => $this->getEnumSelectOptions(config('enums.gender')),
+            'marital_status' => $this->getEnumSelectOptions(config('enums.marital_status')),
+            'application' => $application,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Application $application)
     {
-        //
+        $request->validate([
+            'marital_status' => 'required',
+            'gender' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'move_in_date' => 'required',
+            'number_of_person' => 'required',
+            'unit_id' => 'required',
+            'resident_type' => 'required',
+        ]);
+
+        $values = $request->all();
+        
+        if(array_key_exists("unit_owner_checklists" , $values))
+            $values["unit_owner_checklists"] = implode(",", $values["unit_owner_checklists"]);
+        else
+            $values["unit_owner_checklists"] = null;
+
+        if(array_key_exists("unit_tenant_checklists" , $values))
+            $values["unit_tenant_checklists"] = implode(",", $values["unit_tenant_checklists"]);
+        else
+            $values["unit_tenant_checklists"] = null;
+
+        if(array_key_exists("charges_checklists" , $values))
+            $values["charges_checklists"] = implode(",", $values["charges_checklists"]);
+        else
+            $values["charges_checklists"] = null;
+
+        if(array_key_exists("charges_remarks" , $values))
+            $values["charges_remarks"] = implode(",", $values["charges_remarks"]);
+        else
+            $values["charges_remarks"] = null;
+
+        if(array_key_exists("signature_checklists" , $values))
+            $values["signature_checklists"] = implode(",", $values["signature_checklists"]);
+        else
+            $values["signature_checklists"] = null;
+
+        if(array_key_exists("authorized_unit_occupant_names" , $values))
+            $values["authorized_unit_occupant_names"] = implode(",", $values["authorized_unit_occupant_names"]);
+        else
+            $values["authorized_unit_occupant_names"] = null;
+
+        if(array_key_exists("authorized_unit_occupant_relations" , $values))
+            $values["authorized_unit_occupant_relations"] = implode(",", $values["authorized_unit_occupant_relations"]);
+        else
+            $values["authorized_unit_occupant_relations"] = null;
+
+        if(array_key_exists("authorized_unit_occupant_ages" , $values))
+            $values["authorized_unit_occupant_ages"] = implode(",", $values["authorized_unit_occupant_ages"]);
+        else
+            $values["authorized_unit_occupant_ages"] = null;
+
+        if(array_key_exists("authorized_unit_occupant_remarks" , $values))
+            $values["authorized_unit_occupant_remarks"] = implode(",", $values["authorized_unit_occupant_remarks"]);
+        else
+            $values["authorized_unit_occupant_remarks"] = null;
+
+        if(array_key_exists("househelper_driver_names" , $values))
+            $values["househelper_driver_names"] = implode(",", $values["househelper_driver_names"]);
+        else
+            $values["househelper_driver_names"] = null;
+
+        if(array_key_exists("househelper_driver_ages" , $values))
+            $values["househelper_driver_ages"] = implode(",", $values["househelper_driver_ages"]);
+        else
+            $values["househelper_driver_ages"] = null;
+
+        if(array_key_exists("househelper_driver_remarks" , $values))
+            $values["househelper_driver_remarks"] = implode(",", $values["househelper_driver_remarks"]);
+        else
+            $values["househelper_driver_remarks"] = null;
+
+        $move_in = $application->moveIn->update($values);
+        $resident = $application->residentInformation->update($values);
+        $application->update($values);
+
+        return redirect()->route('applications.index', ['status' => 1])->with('success', 'Application updated successfully.');
     }
 
     /**

@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('occupation')->nullable();
             $table->string('citizenship')->nullable();
-            $table->enum('marital_status', config('enums.marital_status'))->nullable();
+            $table->enum('marital_status', array_keys(config('enums.marital_status')))->nullable();
             $table->string('telephone_number')->nullable();
-            $table->enum('gender', config('enums.gender'))->nullable();
+            $table->enum('gender', array_keys(config('enums.gender')))->nullable();
             $table->string('emergency_name')->nullable();
             $table->string('emergency_contact')->nullable();
             $table->string('emergency_address')->nullable();
