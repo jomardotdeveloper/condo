@@ -41,9 +41,9 @@ return [
     ],
 
     'leave_status' => [
-        1 =>'Pending',
-        2=>'Approved',
-        3=>'Rejected',
+        1 => 'Pending',
+        2 => 'Approved',
+        3 => 'Rejected',
     ],
     'purchase_status' => [
         1 => 'Request For Quotation',
