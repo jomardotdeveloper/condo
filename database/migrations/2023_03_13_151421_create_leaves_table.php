@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->string('remarks')->nullable();
-            $table->enum('status', array_keys(config('enums.l_status')));
+            $table->enum('payment_status', array_keys(config('enums.payment_status')));
             $table->timestamps();
         });
     }
