@@ -29,6 +29,12 @@ return [
         3 => 'Rejected'
     ],
 
+    'l_status' => [
+        1 => 'Pending',
+        2 => 'Approved',
+        3 => 'Rejected'
+    ],
+
     'marital_status' => [
         1 => 'Single',
         2 => 'Married',
@@ -45,6 +51,7 @@ return [
         2 => 'Approved',
         3 => 'Rejected',
     ],
+
     'purchase_status' => [
         1 => 'Request For Quotation',
         2 => 'Purchase Order',
