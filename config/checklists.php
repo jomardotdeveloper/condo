@@ -30,4 +30,11 @@ return [
         5 => 'Visitors Pass Form',
         6 => 'Others (Please specify)',
     ],
+    'move_out_charges_checklists' => [
+        1 => 'Asssociation/ Parking Dues',
+        2 => 'Water Bill',
+        3 => 'Electric Bill',
+        4 => 'Violation Ticket',
+        5 => 'Others (Please Specify)',
+    ]
 ];

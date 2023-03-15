@@ -46,8 +46,17 @@ class Application extends Model
         return $this->belongsTo(ResidentInformation::class);
     }
 
+    public function debit() {
+        return $this->hasOne(Debit::class);
+    }
+
+    public function invoices() {
+        return $this->hasMany(Invoice::class);
+    }
+
     public function getFullNameAttribute()
     {
         return $this->last_name . ' ' . $this->first_name . ' ' . $this->middle_name;
     }
+   
 }

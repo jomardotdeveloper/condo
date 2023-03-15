@@ -13,17 +13,19 @@ class Input extends Component
     public $label;
     public $defaultValue;
     public $isRequired;
+    public $isReadonly;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($type, $name, $label, $defaultValue = "", $isRequired = false)
+    public function __construct($type, $name, $label, $defaultValue = "", $isRequired = false, $isReadonly = false)
     {
         $this->type = $type;
         $this->name = $name;
         $this->label = $label;
         $this->defaultValue = $defaultValue;
         $this->isRequired = $isRequired;
+        $this->isReadonly = $isReadonly;
     }
 
     /**
@@ -37,6 +39,7 @@ class Input extends Component
             'label' => $this->label,
             'value' => $this->defaultValue,
             'isRequired' => $this->isRequired,
+            'isReadonly' => $this->isReadonly,
         ]);
     }
 }

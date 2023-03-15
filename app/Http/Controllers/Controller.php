@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Invoice;
+use App\Models\Payment;
 use App\Models\User;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -81,14 +82,57 @@ class Controller extends BaseController
     // INVOICE
 
 
-    public function createInvoice($request) {
-        $invoice = Invoice::create([
-            'user_id' => $request->user_id,
-            'unit_id' => $request->unit_id,
-            'application_id' => $request->application_id,
-            'due_date' => $request->due_date,
-            'lines' => $request->lines,
-        ]);
+    public function createInvoice($request, $type) {
+
+        if($type == Invoice::MOVE_IN)
+        {
+            $lines = [
+                [
+                    'id' => 1,
+                    'label' => $request->get("label"),
+                    'amount' => $request->get("amount"),
+                ]
+            ];
+            
+            $invoice = Invoice::create([
+                'application_id' => $request->application_id,
+                'due_date' => date('Y-m-d'),
+                'lines' => json_encode($lines),
+            ]);
+            
+        }else if ($type == Invoice::NORMAL) {
+            $invoice = Invoice::create([
+                'due_date' => $request->due_date,
+                'lines' => $request->lines,
+                'remarks' => $request->remarks,
+            ]);
+        }
+            
         return $invoice;
+    }
+
+    public function createPayment($request, $invoice_id) {
+        $payment = Payment::create([
+            'invoice_id' => $invoice_id,
+            'amount' => $request->amount,
+            'payment_method' => $request->payment_method,
+            'payment_reference' => $request->payment_reference,
+            'payment_status' => $request->payment_status,
+        ]);
+
+
+        return $payment;
+    }
+
+    public function updatePayment($request, $payment, $invoice_id) {
+        $payment->update([
+            'amount' => $request->amount,
+            'payment_method' => $request->payment_method,
+            'payment_reference' => $request->payment_reference,
+            'payment_status' => $request->payment_status,
+            'invoice_id' => $invoice_id,
+        ]);
+        
+        return $payment;
     }
 }

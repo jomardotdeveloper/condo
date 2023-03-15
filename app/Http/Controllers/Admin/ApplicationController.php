@@ -3,14 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Traits\InvoiceTrait;
+use App\Http\Traits\PaymentTrait;
 use App\Models\Application;
+use App\Models\Debit;
+use App\Models\Invoice;
 use App\Models\MoveIn;
 use App\Models\ResidentInformation;
 use App\Models\Unit;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ApplicationController extends Controller
 {
+    use InvoiceTrait, PaymentTrait;
     /**
      * Display a listing of the resource.
      */
@@ -49,6 +55,8 @@ class ApplicationController extends Controller
      */
     public function store(Request $request)
     {
+
+
         $request->validate([
             'marital_status' => 'required',
             'gender' => 'required',
@@ -255,6 +263,31 @@ class ApplicationController extends Controller
         $application->status = $values['status'];
         $application->save();
 
-        return redirect()->route('applications.index', ['status' => $values['status']])->with('success', 'Application moved to status successfully.');
+        return redirect()->route('applications.index', ['status' => $values['status']])->with('success', 'Application has been moved.');
+    }
+
+
+    public function storeInvoice(Request $request) {
+        $this->createDebit($request, Debit::MOVE_IN);
+        $application = Application::find($request->application_id);
+        $application->status = Application::FOR_PAYMENT;
+        $application->save();
+        return redirect()->route('applications.index', ['status' => Application::FOR_PAYMENT])->with('success', 'Invoice created successfully. Application status has been changed to "For Payment".');
+    }
+
+    public function storePayment(Request $request) {
+        $application = Application::find($request->application_id);
+        $this->createSubscription($request);
+        $application->status = Application::LOBBY_GUARD;
+        $application->save();
+        return redirect()->route('applications.index', ['status' => Application::LOBBY_GUARD])->with('success', 'Payment created successfully. Application status has been changed to "Lobby Guard".');
+    }
+
+    public function storeUser(Request $request) {
+        $application = Application::find($request->application_id);
+        $this->createUser($request, User::USER);
+        $application->status = Application::DONE;
+        $application->save();
+        return redirect()->route('applications.index', ['status' => Application::LOBBY_GUARD])->with('success', 'User created successfully. Application status has been changed to "DONE".');
     }
 }

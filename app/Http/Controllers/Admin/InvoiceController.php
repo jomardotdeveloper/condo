@@ -36,18 +36,21 @@ class InvoiceController extends Controller
 
         if($type == Invoice::MONTHLY_DUES)
             return view('admin.invoices.create', [
+                'type' => $type,
                 'units' => $this->getSelectOptions(Unit::class, "unit_number"),
             ]);
         else if($type == Invoice::MOVE_IN)
             return view('admin.invoices.create', [
+                'type' => $type,
                 'applications' => $this->getSelectOptions(
                     Application::class,
                     "full_name",
-                    Application::where('status', Application::FOR_PAYMENT)->get()->all()
+                    Application::where('status', Application::FOR_PAYMENT)->get()
                 ),
             ]);
         else if($type == Invoice::MOVE_OUT)
             return view('admin.invoices.create', [
+                'type' => $type,
                 'move_outs' => $this->getSelectOptions(
                     MoveOut::class,
                     "full_name",
@@ -56,7 +59,8 @@ class InvoiceController extends Controller
             ]);
 
         return view('admin.invoices.create', [
-                'remarks' => true
+            'remarks' => true,
+            'type' => $type,
         ]);
     }
 
@@ -65,36 +69,34 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        $values = $request->all();
-
-        if(array_key_exists("lines", $values))
-            $values["lines"] = json_encode($values["lines"]);
-
-        Invoice::create($values);
-
+        $this->createInvoice($request, Invoice::NORMAL);
         return redirect()->route('admin.invoices.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Invoice $invoice)
     {
-        //
+        return view('admin.invoices.show', [
+            'invoice' => $invoice,
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Invoice $invoice)
     {
-        //
+        return view('admin.invoices.edit', [
+            'invoice' => $invoice,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Invoice $invoice)
     {
         //
     }
@@ -102,7 +104,7 @@ class InvoiceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Invoice $invoice)
     {
         //
     }

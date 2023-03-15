@@ -44,4 +44,34 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function employee()
+    {
+        return $this->hasOne(Employee::class);
+    }
+
+    public function leaves()
+    {
+        return $this->hasMany(Leave::class);
+    }
+
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
+    public function getHasTimeInAttribute()
+    {
+        return $this->attendances()->where('date', date('Y-m-d'))->exists();
+    }
+
+    public function getHasTimeOutAttribute()
+    {
+        return $this->attendances()->where('date', date('Y-m-d'))->whereNotNull('time_out')->exists();
+    }
+
+    public function getHasActiveLeaveAttribute()
+    {
+        return $this->leaves()->where('status', Leave::APPROVED)->where('start_date', '<=', date('Y-m-d'))->where('end_date', '>=', date('Y-m-d'))->exists();
+    }
 }

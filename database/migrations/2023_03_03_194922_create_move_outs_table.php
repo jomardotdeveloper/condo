@@ -19,7 +19,10 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('middle_name')->nullable();
             $table->foreignId('unit_id')->constrained('units')->onDelete('cascade');
-            $table->longText('item_lines')->nullable();
+            $table->longText('item_quantities')->nullable();
+            $table->longText('item_names')->nullable();
+            $table->longText('item_descriptions')->nullable();
+            $table->longText('item_remarks')->nullable();
             $table->string('charges_checklists')->nullable();
             $table->string('others')->nullable();
             $table->string('or_ar_number')->nullable();

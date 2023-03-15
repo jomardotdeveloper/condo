@@ -4,10 +4,15 @@
 @include('layouts.admin.head')
 <body class="nk-body bg-white npc-default pg-error">
     <div class="nk-block nk-block-middle nk-auth-body">
-        <div class="brand-logo pb-5">
-            <a href="html/index.html" class="logo-link">
-                <img class="logo-light logo-img logo-img-lg" src="{{ asset('admin/images/logo.png') }}" srcset="{{ asset('admin/images/logo2x.png') }} 2x" alt="logo">
-                <img class="logo-dark logo-img logo-img-lg" src="{{ asset('admin/images/logo-dark.png') }}" srcset="{{ asset('admin/images/logo-dark2x.png') }} 2x" alt="logo-dark">
+        <div class="brand-logo pb-2">
+            <center>
+                <a href="{{ route('login') }}" class="logo-link">
+                    {{-- <img class="logo-light logo-img logo-img-lg" src="{{ asset('admin/images/cgs.png') }}" srcset="{{ asset('admin/images/cgs.png') }} 2x" alt="logo"> --}}
+                                    <img class="" src="{{ asset('admin/images/cgs.png') }}" srcset="{{ asset('admin/images/cgs.png') }} 2x" alt="logo-dark">
+             
+                    
+            </center>
+            
             </a>
         </div>
         @include('admin.includes.alerts')
@@ -19,31 +24,32 @@
                 </div>
             </div>
         </div><!-- .nk-block-head -->
-        <form action="{{ route('admin.login') }}" class="form-validate is-alter" autocomplete="off" method="POST">
+        <form action="{{ route('admin.login') }}" method="POST">
             @csrf
             <div class="form-group">
                 <div class="form-label-group">
                     <label class="form-label" for="email-address">Email or Username</label>
                 </div>
                 <div class="form-control-wrap">
-                    <input autocomplete="off" type="text" class="form-control form-control-lg" required id="email-address" placeholder="Enter your email address or username">
+                    <input type="text" class="form-control form-control-lg" name="email" placeholder="Enter your email address"  required/>
                 </div>
             </div><!-- .form-group -->
             <div class="form-group">
                 <div class="form-label-group">
-                    <label class="form-label" for="password">Passcode</label>
+                    <label class="form-label" for="password">Password</label>
                 </div>
                 <div class="form-control-wrap">
                     <a tabindex="-1" href="#" class="form-icon form-icon-right passcode-switch lg" data-target="password">
                         <em class="passcode-icon icon-show icon ni ni-eye"></em>
                         <em class="passcode-icon icon-hide icon ni ni-eye-off"></em>
                     </a>
-                    <input autocomplete="new-password" type="password" class="form-control form-control-lg" required id="password" placeholder="Enter your passcode">
+                    <input  type="password" class="form-control form-control-lg" name="password" placeholder="Enter your password" required>
                 </div>
             </div><!-- .form-group -->
-            <div class="form-group">
-                <button type="submit" class="btn btn-lg btn-primary btn-block">Sign in</button>
-                <a href="{{ route('application') }}" class="btn btn-lg btn-primary btn-block mt-2">Submit Application</a>
+            <div class="form-group text-center">
+                <button type="submit" class="btn btn-lg btn-primary btn-block mb-2">Sign in</button>
+
+                <a href="{{ route('application') }}"  style="font-weight:bold;">Submit Application</a>
             </div>
         </form><!-- form -->
     </div><!-- .nk-block -->

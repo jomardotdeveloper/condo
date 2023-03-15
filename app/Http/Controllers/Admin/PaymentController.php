@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Invoice;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -12,7 +14,9 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.payments.index', [
+            'payments' => Payment::all(),
+        ]);
     }
 
     /**
@@ -20,7 +24,10 @@ class PaymentController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.payments.create', [
+            'invoices' => $this->getSelectOptions(Invoice::class, "invoice_number"),
+            'payment_status' => $this->getEnumSelectOptions(config('enums.payment_status')),
+        ]);
     }
 
     /**
@@ -28,38 +35,47 @@ class PaymentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->createPayment($request, $request->invoice_id);
+        return redirect()->route('admin.payments.index')->with('success', 'Payment created successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Payment $payment)
     {
-        //
+        return view('admin.payments.show', [
+            'payment' => $payment,
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Payment $payment)
     {
-        //
+        return view('admin.payments.edit', [
+            'payment' => $payment,
+            'invoices' => $this->getSelectOptions(Invoice::class, "invoice_number"),
+            'payment_status' => $this->getEnumSelectOptions(config('enums.payment_status')),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Payment $payment)
     {
-        //
+        $this->updatePayment($request, $payment, $request->invoice_id);
+        return redirect()->route('admin.payments.index')->with('success', 'Payment updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Payment $payment)
     {
-        //
+        $payment->delete();
+        return response()->json(["success" => "Payment Record Deleted Successfully"],201);
     }
 }

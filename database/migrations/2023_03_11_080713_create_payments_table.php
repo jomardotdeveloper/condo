@@ -17,7 +17,7 @@ return new class extends Migration
             $table->float('amount');
             $table->string('payment_method')->nullable();
             $table->string('payment_reference')->nullable();
-            $table->enum('payment_status', config('enums.payment_status'));
+            $table->enum('payment_status', array_keys(config('enums.payment_status')));
             $table->string('proof_of_payment_src')->nullable();
             $table->timestamps();
         });

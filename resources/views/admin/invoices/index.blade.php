@@ -26,7 +26,11 @@
                 {{-- HEAD --}}
                 <thead>
                     <tr class="nk-tb-item nk-tb-head">
-                        <th class="nk-tb-col"><span class="sub-text">Name</span></th>
+                        <th class="nk-tb-col"><span class="sub-text">ID</span></th>
+                        <th class="nk-tb-col"><span class="sub-text">Type</span></th>
+                        <th class="nk-tb-col"><span class="sub-text">Total Amount</span></th>
+                        <th class="nk-tb-col"><span class="sub-text">Due Date</span></th>
+                        <th class="nk-tb-col"><span class="sub-text">Paid</span></th>
                         <th class="nk-tb-col nk-tb-col-tools text-end">
                         </th>
                     </tr>
@@ -36,10 +40,22 @@
                     @foreach ($invoices as $invoice)
                     <tr class="nk-tb-item">
                         <td class="nk-tb-col">
-                            {{ $department->name }}
+                            {{ $invoice->formatted_id }}
+                        </td>
+                        <td class="nk-tb-col">
+                            {{ $invoice->invoice_type }}
+                        </td>
+                        <td class="nk-tb-col">
+                            {{ $invoice->total_amount  }}
+                        </td>
+                        <td class="nk-tb-col">
+                            {{ $invoice->due_date }}
+                        </td>
+                        <td class="nk-tb-col">
+                            {{ $invoice->is_paid ? 'Yes' : 'No' }}
                         </td>
                         <x-datatable-action :items="[
-                            
+                            array('name' => 'View', 'url' => route('invoices.show', $invoice), 'icon'=> 'icon ni ni-eye'),
                             array('name' => 'Edit', 'url' => route('invoices.edit', $invoice), 'icon'=> 'icon ni ni-pen'),
                             array('name' => 'Delete', 
                                   'onclick' => 'deleteRecord(' . '`' . route('invoices.destroy', ['invoice' => $invoice]) . '`' .')', 

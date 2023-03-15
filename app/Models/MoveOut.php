@@ -16,7 +16,10 @@ class MoveOut extends Model
         'last_name',
         'middle_name',
         'unit_id',
-        'item_lines',
+        'item_quantities',
+        'item_names',
+        'item_descriptions',
+        'item_remarks',
         'charges_checklists',
         'others',
         'or_ar_number',
@@ -43,8 +46,72 @@ class MoveOut extends Model
         return $this->belongsTo(Unit::class);
     }
 
+    public function debit() {
+        return $this->hasOne(Debit::class);
+    }
+
     public function getFullNameAttribute()
     {
         return $this->last_name . ' ' . $this->first_name . ' ' . $this->middle_name;
+    }
+
+    public function getItemQuantitiesArrAttribute() {
+        $checklists = $this->item_quantities;
+
+        if(!$checklists)
+            return [];
+        
+        if(strpos($checklists, ',') === false)
+            return [$checklists];
+
+        return explode(',', $checklists);
+    }
+
+    public function getItemNamesArrAttribute() {
+        $checklists = $this->item_names;
+
+        if(!$checklists)
+            return [];
+        
+        if(strpos($checklists, ',') === false)
+            return [$checklists];
+
+        return explode(',', $checklists);
+    }
+
+    public function getItemDescriptionsArrAttribute() {
+        $checklists = $this->item_descriptions;
+
+        if(!$checklists)
+            return [];
+        
+        if(strpos($checklists, ',') === false)
+            return [$checklists];
+
+        return explode(',', $checklists);
+    }
+
+    public function getItemRemarksArrAttribute() {
+        $checklists = $this->item_remarks;
+
+        if(!$checklists)
+            return [];
+        
+        if(strpos($checklists, ',') === false)
+            return [$checklists];
+
+        return explode(',', $checklists);
+    }
+
+    public function getChargesChecklistsArrAttribute() {
+        $checklists = $this->charges_checklists;
+
+        if(!$checklists)
+            return [];
+        
+        if(strpos($checklists, ',') === false)
+            return [$checklists];
+
+        return explode(',', $checklists);
     }
 }
