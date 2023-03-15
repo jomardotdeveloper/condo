@@ -26,7 +26,7 @@ return new class extends Migration
             $table->foreignId('unit_id')->nullable()->constrained('units')->onDelete('set null');
             $table->foreignId('application_id')->nullable()->constrained('applications')->onDelete('set null');
             $table->foreignId('move_out_id')->nullable()->constrained('move_outs')->onDelete('set null');
-            $table->enum('type', array_keys(config('enums.debit_types')));
+            $table->enum('type', [1,2,3]);
             $table->date('due_date');
             $table->timestamps();
         });
