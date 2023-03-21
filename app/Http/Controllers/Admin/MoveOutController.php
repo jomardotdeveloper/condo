@@ -7,7 +7,10 @@ use App\Http\Traits\InvoiceTrait;
 use App\Http\Traits\PaymentTrait;
 use App\Models\Application;
 use App\Models\Debit;
+use App\Models\Employee;
 use App\Models\MoveOut;
+use App\Models\OutAttachment;
+use App\Models\Position;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 
@@ -41,6 +44,26 @@ class MoveOutController extends Controller
         return view('admin.move-outs.create', [
             'units' => $this->getSelectOptions(Unit::class, "unit_number"),
             'resident_types' => $this->getResidentTypeOptions(),
+            'administrative_officers' => $this->getSelectOptions(
+                Employee::class, 
+                "full_name", 
+                Employee::where('position_id', Position::ADMINISTRATIVE_OFFICER)->get()
+            ),
+            'finance_departments' => $this->getSelectOptions(
+                Employee::class, 
+                "full_name", 
+                Employee::where('position_id', Position::FINANCE_DEPARTMENT)->get()
+            ),
+            'executive_ao_complex_managers' => $this->getSelectOptions(
+                Employee::class, 
+                "full_name", 
+                Employee::where('position_id', Position::EXECUTIVE_AO_COMPLEX_MANAGER)->get()
+            ),
+            'security_officers' => $this->getSelectOptions(
+                Employee::class, 
+                "full_name", 
+                Employee::where('position_id', Position::SECURITY_OFFICER)->get()
+            ),
         ]);
     }
 
@@ -97,6 +120,26 @@ class MoveOutController extends Controller
             'move_out' => $move_out,
             'units' => $this->getSelectOptions(Unit::class, "unit_number"),
             'resident_types' => $this->getResidentTypeOptions(),
+            'administrative_officers' => $this->getSelectOptions(
+                Employee::class, 
+                "full_name", 
+                Employee::where('position_id', Position::ADMINISTRATIVE_OFFICER)->get()
+            ),
+            'finance_departments' => $this->getSelectOptions(
+                Employee::class, 
+                "full_name", 
+                Employee::where('position_id', Position::FINANCE_DEPARTMENT)->get()
+            ),
+            'executive_ao_complex_managers' => $this->getSelectOptions(
+                Employee::class, 
+                "full_name", 
+                Employee::where('position_id', Position::EXECUTIVE_AO_COMPLEX_MANAGER)->get()
+            ),
+            'security_officers' => $this->getSelectOptions(
+                Employee::class, 
+                "full_name", 
+                Employee::where('position_id', Position::SECURITY_OFFICER)->get()
+            ),
         ]);
     }
 
@@ -163,9 +206,41 @@ class MoveOutController extends Controller
     public function storePayment(Request $request) {
         $move_out = MoveOut::find($request->move_out_id);
         $this->createSubscription($request);
-        $move_out->status = Application::LOBBY_GUARD;
+        $move_out->status = Application::FINANCE_VERIFICATION;
         $move_out->save();
-        return redirect()->route('applications.index', ['status' => Application::LOBBY_GUARD])->with('success', 'Payment created successfully. Move out status has been changed to "Lobby Guard".');
+        return redirect()->route('move-outs.index', ['status' => Application::FINANCE_VERIFICATION])->with('success', 'Payment created successfully. Move out status has been changed to "Lobby Guard".');
+    }
+
+    public function signApplication($move_out_id, $field) {
+        $values = [
+            $field => true
+        ];
+        // dd($values);
+        $application = MoveOut::find($move_out_id);
+        $application->update($values);
+
+        if($field == 'verified_is_signed')
+            $application->status = Application::COMPLEX_MANAGER_APPROVAL;
+            $application->save();
+        
+        if($field == 'approved_is_signed')
+            $application->status = Application::LOBBY_GUARD;
+            $application->save();
+
+        // if($application->status == Application::FINANCE_VERIFICATION)
+        //     $application->status = Application::COMPLEX_MANAGER_APPROVAL;
+        
+        // if ($application->status == Application::COMPLEX_MANAGER_APPROVAL)
+        //     $application->status = Application::LOBBY_GUARD;
+
+        return redirect()->route('move-outs.index', ['status' => $application->status])->with('success', 'Move Out Application signed successfully.');
+    }
+
+    public function storeAttachment(Request $request) {
+        $values = $request->all();
+        $values['path'] =  $this->uploadFile($request, 'path', 'attachments');
+        $attachment = OutAttachment::create($values);
+        return redirect()->route('move-outs.index', ['status' => $request->status])->with('success', 'Attachment created successfully.');
     }
 
     public function getResidentTypeOptions()

@@ -18,8 +18,14 @@ class SubscriptionController extends Controller
      */
     public function index()
     {
+        $subscriptions = Subscription::all();
+
+        if(isset($_GET['debit_id']))
+        {
+            $subscriptions = Subscription::where('debit_id', $_GET['debit_id'])->get();
+        }
         return view('admin.subscriptions.index', [
-            'subscriptions' => Subscription::all(),
+            'subscriptions' => $subscriptions,
         ]);
     }
 
@@ -47,14 +53,14 @@ class SubscriptionController extends Controller
                 $debit->subscriptions()->create($request->all());
                 if($debit->is_paid) {
                     $debit->application->update([
-                        'status' => Application::LOBBY_GUARD,
+                        'status' => Application::FINANCE_VERIFICATION,
                     ]);
                 }
             } else if($debit->type == Debit::MOVE_OUT){
                 $debit->subscriptions()->create($request->all());
                 if($debit->is_paid) {
                     $debit->moveOut->update([
-                        'status' => Application::LOBBY_GUARD,
+                        'status' => Application::FINANCE_VERIFICATION,
                     ]);
                 }
             }
@@ -91,7 +97,7 @@ class SubscriptionController extends Controller
             if ($subscription->debit->type == Debit::MOVE_IN) {
                 if($subscription->debit->is_paid) {
                     $subscription->debit->application->update([
-                        'status' => Application::LOBBY_GUARD,
+                        'status' => Application::FINANCE_VERIFICATION,
                     ]);
                 } else {
                     $subscription->debit->application->update([
@@ -101,7 +107,7 @@ class SubscriptionController extends Controller
             } else if ($subscription->debit->type == Debit::MOVE_OUT) {
                 if($subscription->debit->is_paid) {
                     $subscription->debit->moveOut->update([
-                        'status' => Application::LOBBY_GUARD,
+                        'status' => Application::FINANCE_VERIFICATION,
                     ]);
                 } else {
                     $subscription->debit->moveOut->update([

@@ -27,6 +27,7 @@
                         <th class="nk-tb-col"><span class="sub-text">Position</span></th>
                         <th class="nk-tb-col"><span class="sub-text">Department</span></th>
                         <th class="nk-tb-col"><span class="sub-text">Email</span></th>
+                        <th class="nk-tb-col"><span class="sub-text">Signature</span></th>
                         <th class="nk-tb-col nk-tb-col-tools text-end">
                         </th>
                     </tr>
@@ -46,6 +47,14 @@
                         </td>
                         <td class="nk-tb-col">
                             {{ $employee->user->email }}
+                        </td>
+                        <td class="nk-tb-col">
+                            @if ($employee->signature_src)
+                            <img src="{{ $employee->signature_src }}" alt="" width="100">
+                            @else
+                            <span class="badge badge-danger">No Signature</span>
+                            @endif
+                            
                         </td>
                         <x-datatable-action :items="[
                             array('name' => 'Edit', 'url' => route('employees.edit', $employee), 'icon'=> 'icon ni ni-pen'),

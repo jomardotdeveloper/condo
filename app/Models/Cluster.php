@@ -22,4 +22,6 @@ class Cluster extends Model
             return [];
         return explode(',', $this->unit_towers);
     }
+
+    
 }

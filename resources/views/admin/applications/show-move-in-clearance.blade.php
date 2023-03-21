@@ -5,11 +5,12 @@
 <x-show-item label="Unit Owner" :value="$application->is_owner ? 'YES' : 'NO'"/>
 <x-show-item label="Tenant" :value="!$application->is_owner ? 'YES' : 'NO'"/>
 <x-show-item label="Requested By" value="{{ $application->moveIn->requested_by }}"/>
-<x-show-item label="Approved By" value="{{ $application->moveIn->approved_by }}"/>
-<x-show-item label="Cleared By" value="{{ $application->moveIn->cleared_by }}"/>
-<x-show-item label="Checked and Verified By" value="{{ $application->moveIn->verified_by }}"/>
-<x-show-item label="Noted By" value="{{ $application->moveIn->noted_by }}"/>
 <x-show-item label="Additional Instruction by the unit owner, if any:" value="{{ $application->moveIn->additional_instruction }}"/>
+<div class="nk-divider divider md"></div>
+<x-show-item label="Approved By" value="{{ $application->moveIn->approvedBy->full_name }} {{ !$application->moveIn->approved_is_signed ? '(Not Yet Signed)' : '(Signed)' }}"/>
+<x-show-item label="Cleared By" value="{{ $application->moveIn->clearedBy->full_name }} {{ !$application->moveIn->cleared_is_signed ? '(Not Yet Signed)' : '(Signed)' }}"/>
+<x-show-item label="Checked and Verified By" value="{{ $application->moveIn->verifiedBy->full_name }} {{ !$application->moveIn->verified_is_signed ? '(Not Yet Signed)' : '(Signed)' }}"/>
+<x-show-item label="Noted By" value="{{ $application->moveIn->notedBy->full_name }} {{ !$application->moveIn->noted_is_signed ? '(Not Yet Signed)' : '(Signed)' }}"/> 
 <div class="nk-divider divider md"></div>
 @if($application->is_owner)
 <div class="nk-block">

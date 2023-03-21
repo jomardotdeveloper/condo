@@ -10,12 +10,16 @@
     
 
     {{-- TITLE --}}
-    <x-datatable-head title="View Move Out" />
+    <x-datatable-head title="View Move Out ({{ $move_out->status_name }})" />
 
     {{-- ALERTS --}}
     @include('admin.includes.alerts')
 
     {{-- BUTTONS --}}
+    <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#attachment-create-modal">
+        Add Attachment
+    </button>
+
     @if($move_out->status == App\Models\Application::NEW_APPLICATION && !$move_out->debit)
     <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#invoice-create-modal">
         Create Invoice
@@ -34,10 +38,39 @@
     </button>
     @endif
 
+    @if($move_out->status == App\Models\Application::FINANCE_VERIFICATION)
+    @if(count($move_out->debit->subscriptions) > 0)
+    <a href="{{ route('subscriptions.index') }}?debit_id={{ $move_out->debit->id }}" class="btn btn-primary mb-2">Show Payments</a>
+    @endif
+    @endif
+
+    
+
     @if($move_out->status == App\Models\Application::LOBBY_GUARD)
     <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#user-create-modal">
         Create User Account
     </button>
+    @endif
+
+    {{-- SIGNATORY BUTTONS --}}
+    @if (in_array(auth()->user()->employee->id, $move_out->signatories))
+    
+        @if (auth()->user()->employee->id == $move_out->approved_by_id && !$move_out->approved_is_signed)
+        <a href="{{ route('move-outs.signature', ['move_out_id' => $move_out->id, 'field' => 'approved_is_signed']) }}" class="btn btn-primary mb-2">Sign</a>
+        @endif
+
+        @if (auth()->user()->employee->id == $move_out->verified_by_id && !$move_out->verified_is_signed)
+        <a href="{{ route('move-outs.signature', ['move_out_id' => $move_out->id, 'field' => 'verified_is_signed']) }}" class="btn btn-primary mb-2">Sign</a>
+        @endif
+
+        @if (auth()->user()->employee->id == $move_out->cleared_by_id && !$move_out->cleared_is_signed)
+        <a href="{{ route('move-outs.signature', ['move_out_id' => $move_out->id, 'field' => 'cleared_is_signed']) }}" class="btn btn-primary mb-2">Sign</a>
+        @endif
+
+        @if (auth()->user()->employee->id == $move_out->noted_by_id && !$move_out->noted_is_signed)
+        <a href="{{ route('move-outs.signature', ['move_out_id' => $move_out->id, 'field' => 'noted_is_signed']) }}" class="btn btn-primary mb-2">Sign</a>
+        @endif
+
     @endif
 
     <div class="card">
@@ -52,11 +85,59 @@
                             <x-show-item label="Unit Owner" :value="$move_out->is_owner ? 'YES' : 'NO'"/>
                             <x-show-item label="Tenant" :value="!$move_out->is_owner ? 'YES' : 'NO'"/>
                             <x-show-item label="Requested By" value="{{ $move_out->requested_by }}"/>
-                            <x-show-item label="Approved By" value="{{ $move_out->approved_by }}"/>
+                            {{-- <x-show-item label="Approved By" value="{{ $move_out->approved_by }}"/>
                             <x-show-item label="Cleared By" value="{{ $move_out->cleared_by }}"/>
                             <x-show-item label="Checked and Verified By" value="{{ $move_out->verified_by }}"/>
-                            <x-show-item label="Noted By" value="{{ $move_out->noted_by }}"/>
+                            <x-show-item label="Noted By" value="{{ $move_out->noted_by }}"/> --}}
                             <x-show-item label="Additional Instruction by the unit owner, if any:" value="{{ $move_out->additional_instruction }}"/>
+                        </div>
+                        <div class="nk-divider divider md"></div>
+                        <div class="profile-ud-list">
+                            <x-show-item label="Approved By" value="{{ $move_out->approvedBy->full_name }} {{ !$move_out->approved_is_signed ? '(Not Yet Signed)' : '(Signed)' }}"/>
+                            <x-show-item label="Cleared By" value="{{ $move_out->clearedBy->full_name }} {{ !$move_out->cleared_is_signed ? '(Not Yet Signed)' : '(Signed)' }}"/>
+                            <x-show-item label="Checked and Verified By" value="{{ $move_out->verifiedBy->full_name }} {{ !$move_out->verified_is_signed ? '(Not Yet Signed)' : '(Signed)' }}"/>
+                            <x-show-item label="Noted By" value="{{ $move_out->notedBy->full_name }} {{ !$move_out->noted_is_signed ? '(Not Yet Signed)' : '(Signed)' }}"/> 
+                        </div>
+                        <div class="nk-divider divider md"></div>
+                        <div class="row">
+                            <div class="col-6">
+                                <h6>Cleared By:</h6>
+                                @if ($move_out->cleared_is_signed)
+                                <img src="{{ $move_out->clearedBy->signature_src }}" alt="signature" width="100px" height="100px"> <br/>
+                                @else
+                                <span class="lead">No Signature</span> <br/>
+                                @endif
+                                
+                                <strong><span class="lead">Administrative Officer</span></strong>
+                            </div>
+                            <div class="col-6">
+                                <h6>Checked and Verified By:</h6>
+                                @if ($move_out->verified_is_signed)
+                                <img src="{{ $move_out->verifiedBy->signature_src }}" alt="signature" width="100px" height="100px"> <br/>
+                                @else
+                                <span class="lead">No Signature</span> <br/>
+                                @endif
+                                <strong><span class="lead">Finance Department</span></strong>
+                            </div>
+                            <div class="col-6 mt-2">
+                                <h6>Approved By:</h6>
+                                @if ($move_out->approved_is_signed)
+                                <img src="{{ $move_out->approvedBy->signature_src }}" alt="signature" width="100px" height="100px"> <br/>
+                                @else
+                                <span class="lead">No Signature</span> <br/>
+                                @endif
+                                <strong><span class="lead">Executive AO/ Complex Manager</span></strong>
+                            </div>
+                            <div class="col-6  mt-2">
+                                <h6>Noted By:</h6>
+                                @if ($move_out->noted_is_signed)
+                                <img src="{{ $move_out->notedBy->signature_src }}" alt="signature" width="100px" height="100px"> <br/>
+                                @else
+                                <span class="lead">No Signature</span> <br/>
+                                @endif
+                                <strong><span class="lead">Security Office</span></strong>
+                            </div>
+                            {{-- @include('admin.applications.show-attachment') --}}
                         </div>
                         <div class="nk-divider divider md"></div>
                         <div class="col-12 mt-2">
@@ -122,6 +203,34 @@
             </div>
         </div>
     </div>
+
+    <div class="card">
+        <div class="card-inner">
+            <h6>Attachments</h6>
+            <table class="datatable-init nk-tb-list nk-tb-ulist" data-auto-responsive="false">
+                {{-- HEAD --}}
+                <thead>
+                    <tr class="nk-tb-item nk-tb-head">
+                        <th class="nk-tb-col"><span class="sub-text">Name</span></th>
+                        <th class="nk-tb-col"><span class="sub-text">Download</span></th>
+                    </tr>
+                </thead>
+                {{-- BODY --}}
+                <tbody>
+                    @foreach ($move_out->outAttachments as $attachment)
+                    <tr class="nk-tb-item">
+                        <td class="nk-tb-col">
+                            {{ $attachment->name }}
+                        </td>
+                        <td class="nk-tb-col">
+                            <a href="{{ $attachment->path }}" class="btn btn-primary" download>Download</a>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 {{-- INVOICE CREATE MODAL --}}
@@ -170,6 +279,26 @@
         </div>
     </form>
 </x-modal>
+
+<x-modal id="attachment-create-modal" title="Add Attachment" footer="Attachment">
+    <form action="{{ route('move-outs.store-attachment') }}" class="row" method="POST" enctype="multipart/form-data">
+        @csrf
+        <input type="hidden" name="move_out_id" value="{{ $move_out->id }}"/>
+        <input type="hidden" name="status" value="{{ $move_out->status }}"/>
+        <div class="col-12">
+            <x-input name="name" label="Name" type="text"  :is-required="true"/>
+        </div>
+
+        <div class="col-12">
+            <x-input name="path" label="File" type="file" :is-required="true"/>
+        </div>
+
+        <div class="col-12 mt-2">
+            <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+    </form>
+</x-modal>
+
 
 
 @endsection

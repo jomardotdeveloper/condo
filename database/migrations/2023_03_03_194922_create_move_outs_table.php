@@ -35,6 +35,14 @@ return new class extends Migration
             $table->string('verified_by')->nullable();
             $table->string('noted_by')->nullable();
             $table->string('additional_instruction')->nullable();
+            $table->foreignId('cleared_by_id')->nullable()->constrained('employees')->onDelete('set null');
+            $table->foreignId('verified_by_id')->nullable()->constrained('employees')->onDelete('set null');
+            $table->foreignId('noted_by_id')->nullable()->constrained('employees')->onDelete('set null');
+            $table->foreignId('approved_by_id')->nullable()->constrained('employees')->onDelete('set null');
+            $table->boolean('cleared_is_signed')->default(false);
+            $table->boolean('verified_is_signed')->default(false);
+            $table->boolean('noted_is_signed')->default(false);
+            $table->boolean('approved_is_signed')->default(false);
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
             $table->enum('status', array_keys(config('enums.application_status')));
             $table->timestamps();

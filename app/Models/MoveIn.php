@@ -25,7 +25,35 @@ class MoveIn extends Model
         'verified_by',
         'noted_by',
         'additional_instruction',
+        'cleared_by_id',
+        'verified_by_id',
+        'noted_by_id',
+        'approved_by_id',
+        'cleared_is_signed',
+        'verified_is_signed',
+        'noted_is_signed',
+        'approved_is_signed',
     ];
+
+    public function clearedBy()
+    {
+        return $this->belongsTo(Employee::class, 'cleared_by_id');
+    }
+
+    public function verifiedBy()
+    {
+        return $this->belongsTo(Employee::class, 'verified_by_id');
+    }
+
+    public function notedBy()
+    {
+        return $this->belongsTo(Employee::class, 'noted_by_id');
+    }
+
+    public function approvedBy()
+    {
+        return $this->belongsTo(Employee::class, 'approved_by_id');
+    }
 
     public function user()
     {
@@ -97,5 +125,23 @@ class MoveIn extends Model
             return [$checklists];
 
         return explode(',', $checklists);
+    }
+
+    public function getSignatoriesAttribute() {
+        $signatories = [];
+
+        if($this->cleared_by_id)
+            $signatories[] = $this->cleared_by_id;
+        
+        if($this->verified_by_id)
+            $signatories[] = $this->verified_by_id;
+        
+        if($this->noted_by_id)
+            $signatories[] = $this->noted_by_id;
+        
+        if($this->approved_by_id)
+            $signatories[] = $this->approved_by_id;
+        
+        return $signatories;
     }
 }

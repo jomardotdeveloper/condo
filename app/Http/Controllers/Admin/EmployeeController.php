@@ -46,18 +46,24 @@ class EmployeeController extends Controller
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed',
         ]);
-
-        $user = $this->createUser($request, User::ADMIN);
+        
         
 
-        Employee::create([
+        $user = $this->createUser($request, User::ADMIN);
+        $values = [
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'middle_name' => $request->middle_name,
             'position_id' => $request->position_id,
             'department_id' => $request->department_id,
             'user_id' => $user->id,
-        ]);
+        ];
+        if($request->file('signature_src')) {
+            $values["signature_src"] = $this->uploadFile($request, 'signature_src', 'signatures');
+        }
+        
+
+        Employee::create($values);
 
         return redirect()->route('employees.index')->with('success', 'Employee created successfully.');
     }
@@ -85,14 +91,17 @@ class EmployeeController extends Controller
         ]);
 
         $this->updateUser($request, $employee->user);
-
-        $employee->update([
+        $values = [
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'middle_name' => $request->middle_name,
             'position_id' => $request->position_id,
             'department_id' => $request->department_id,
-        ]);
+        ];
+        if($request->file('signature_src')) {
+            $values["signature_src"] = $this->uploadFile($request, 'signature_src', 'signatures');
+        }
+        $employee->update($values);
 
         return redirect()->route('employees.index')->with('success', 'Employee updated successfully.');
     }

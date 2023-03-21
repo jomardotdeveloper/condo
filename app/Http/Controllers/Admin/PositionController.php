@@ -73,6 +73,9 @@ class PositionController extends Controller
      */
     public function destroy(Position $position)
     {
+        if(!$position->is_deletable)
+            return response()->json(["error" => "Position Record Cannot Be Deleted"],201);
+        
         $position->delete();
 
         return response()->json(["success" => "Position Record Deleted Successfully"],201);

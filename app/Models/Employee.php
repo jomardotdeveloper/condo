@@ -17,6 +17,7 @@ class Employee extends Model
         'position_id',
         'department_id',
         'user_id',
+        'signature_src'
     ];
 
     public function user()

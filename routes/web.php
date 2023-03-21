@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AccountController;
+use App\Http\Controllers\Admin\AnnouncementController;
 use App\Http\Controllers\Admin\ApplicationController;
 use App\Http\Controllers\Admin\BankController;
 use App\Http\Controllers\Admin\ClusterController;
@@ -62,6 +63,8 @@ Route::prefix("/admin")->middleware('auth')->group(function () {
     Route::resource('employees', EmployeeController::class);
     Route::resource('move-outs', MoveOutController::class);
     
+    Route::resource('announcements', AnnouncementController::class);
+
     Route::resource('invoices', InvoiceController::class);
     Route::resource('payments', PaymentController::class);
     Route::resource('banks', BankController::class);
@@ -99,6 +102,10 @@ Route::prefix("/admin")->middleware('auth')->group(function () {
     Route::post('applications/store-invoice', [ApplicationController::class, 'storeInvoice'])->name('applications.store-invoice');
     Route::post('applications/store-payment', [ApplicationController::class, 'storePayment'])->name('applications.store-payment');
     Route::post('applications/store-user', [ApplicationController::class, 'storeUser'])->name('applications.store-user');
+    Route::post('applications/store-attachment', [ApplicationController::class, 'storeAttachment'])->name('applications.store-attachment');
+    Route::post('move-outs/store-attachment', [MoveOutController::class, 'storeAttachment'])->name('move-outs.store-attachment');
     Route::post('applications/{application}/move-to-status', [ApplicationController::class, 'moveToStatus'])->name('applications.move-status');
+    Route::get('applications/{application_id}/{field}/signature', [ApplicationController::class, 'signApplication'])->name('applications.signature');
+    Route::get('move-outs/{move_out_id}/{field}/signature', [MoveOutController::class, 'signApplication'])->name('move-outs.signature');
     Route::get('clusters/unit-towers/{cluster}', [ClusterController::class, 'getUnitTowers'])->name('clusters.unit-towers');
 });

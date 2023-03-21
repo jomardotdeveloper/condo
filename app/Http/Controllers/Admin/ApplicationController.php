@@ -7,12 +7,16 @@ use App\Http\Traits\InvoiceTrait;
 use App\Http\Traits\PaymentTrait;
 use App\Models\Application;
 use App\Models\Debit;
+use App\Models\Employee;
+use App\Models\InAttachment;
 use App\Models\Invoice;
 use App\Models\MoveIn;
+use App\Models\Position;
 use App\Models\ResidentInformation;
 use App\Models\Unit;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Mail\Mailables\Attachment;
 
 class ApplicationController extends Controller
 {
@@ -47,6 +51,26 @@ class ApplicationController extends Controller
             'resident_types' => $this->getResidentTypeOptions(),
             'gender' => $this->getEnumSelectOptions(config('enums.gender')),
             'marital_status' => $this->getEnumSelectOptions(config('enums.marital_status')),
+            'administrative_officers' => $this->getSelectOptions(
+                Employee::class, 
+                "full_name", 
+                Employee::where('position_id', Position::ADMINISTRATIVE_OFFICER)->get()
+            ),
+            'finance_departments' => $this->getSelectOptions(
+                Employee::class, 
+                "full_name", 
+                Employee::where('position_id', Position::FINANCE_DEPARTMENT)->get()
+            ),
+            'executive_ao_complex_managers' => $this->getSelectOptions(
+                Employee::class, 
+                "full_name", 
+                Employee::where('position_id', Position::EXECUTIVE_AO_COMPLEX_MANAGER)->get()
+            ),
+            'security_officers' => $this->getSelectOptions(
+                Employee::class, 
+                "full_name", 
+                Employee::where('position_id', Position::SECURITY_OFFICER)->get()
+            ),
         ]);
     }
 
@@ -147,6 +171,26 @@ class ApplicationController extends Controller
             'gender' => $this->getEnumSelectOptions(config('enums.gender')),
             'marital_status' => $this->getEnumSelectOptions(config('enums.marital_status')),
             'application' => $application,
+            'administrative_officers' => $this->getSelectOptions(
+                Employee::class, 
+                "full_name", 
+                Employee::where('position_id', Position::ADMINISTRATIVE_OFFICER)->get()
+            ),
+            'finance_departments' => $this->getSelectOptions(
+                Employee::class, 
+                "full_name", 
+                Employee::where('position_id', Position::FINANCE_DEPARTMENT)->get()
+            ),
+            'executive_ao_complex_managers' => $this->getSelectOptions(
+                Employee::class, 
+                "full_name", 
+                Employee::where('position_id', Position::EXECUTIVE_AO_COMPLEX_MANAGER)->get()
+            ),
+            'security_officers' => $this->getSelectOptions(
+                Employee::class, 
+                "full_name", 
+                Employee::where('position_id', Position::SECURITY_OFFICER)->get()
+            ),
         ]);
     }
 
@@ -278,9 +322,9 @@ class ApplicationController extends Controller
     public function storePayment(Request $request) {
         $application = Application::find($request->application_id);
         $this->createSubscription($request);
-        $application->status = Application::LOBBY_GUARD;
+        $application->status = Application::FINANCE_VERIFICATION;
         $application->save();
-        return redirect()->route('applications.index', ['status' => Application::LOBBY_GUARD])->with('success', 'Payment created successfully. Application status has been changed to "Lobby Guard".');
+        return redirect()->route('applications.index', ['status' => Application::FINANCE_VERIFICATION])->with('success', 'Payment created successfully. Application status has been changed to "Lobby Guard".');
     }
 
     public function storeUser(Request $request) {
@@ -289,5 +333,37 @@ class ApplicationController extends Controller
         $application->status = Application::DONE;
         $application->save();
         return redirect()->route('applications.index', ['status' => Application::LOBBY_GUARD])->with('success', 'User created successfully. Application status has been changed to "DONE".');
+    }
+
+    public function storeAttachment(Request $request) {
+        $values = $request->all();
+        $values['path'] =  $this->uploadFile($request, 'path', 'attachments');
+        $attachment = InAttachment::create($values);
+        return redirect()->route('applications.index', ['status' => $request->status])->with('success', 'Attachment created successfully.');
+    }
+
+    public function signApplication($application_id, $field) {
+        $values = [
+            $field => true
+        ];
+        // dd($values);
+        $application = Application::find($application_id);
+        $application->moveIn->update($values);
+
+        if($field == 'verified_is_signed')
+            $application->status = Application::COMPLEX_MANAGER_APPROVAL;
+            $application->save();
+        
+        if($field == 'approved_is_signed')
+            $application->status = Application::LOBBY_GUARD;
+            $application->save();
+
+        // if($application->status == Application::FINANCE_VERIFICATION)
+        //     $application->status = Application::COMPLEX_MANAGER_APPROVAL;
+        
+        // if ($application->status == Application::COMPLEX_MANAGER_APPROVAL)
+        //     $application->status = Application::LOBBY_GUARD;
+
+        return redirect()->route('applications.index', ['status' => $application->status])->with('success', 'Application signed successfully.');
     }
 }

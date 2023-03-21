@@ -34,7 +34,40 @@ class MoveOut extends Model
         'additional_instruction',
         'user_id',
         'status', 
+        'cleared_by_id',
+        'verified_by_id',
+        'noted_by_id',
+        'approved_by_id',
+        'cleared_is_signed',
+        'verified_is_signed',
+        'noted_is_signed',
+        'approved_is_signed',
     ];
+
+    public function outAttachments()
+    {
+        return $this->hasMany(OutAttachment::class);
+    }
+
+    public function clearedBy()
+    {
+        return $this->belongsTo(Employee::class, 'cleared_by_id');
+    }
+
+    public function verifiedBy()
+    {
+        return $this->belongsTo(Employee::class, 'verified_by_id');
+    }
+
+    public function notedBy()
+    {
+        return $this->belongsTo(Employee::class, 'noted_by_id');
+    }
+
+    public function approvedBy()
+    {
+        return $this->belongsTo(Employee::class, 'approved_by_id');
+    }
 
     public function user()
     {
@@ -113,5 +146,27 @@ class MoveOut extends Model
             return [$checklists];
 
         return explode(',', $checklists);
+    }
+
+    public function getSignatoriesAttribute() {
+        $signatories = [];
+
+        if($this->cleared_by_id)
+            $signatories[] = $this->cleared_by_id;
+        
+        if($this->verified_by_id)
+            $signatories[] = $this->verified_by_id;
+        
+        if($this->noted_by_id)
+            $signatories[] = $this->noted_by_id;
+        
+        if($this->approved_by_id)
+            $signatories[] = $this->approved_by_id;
+        
+        return $signatories;
+    }
+
+    public function getStatusNameAttribute () {
+        return config('enums.application_status')[$this->status];
     }
 }

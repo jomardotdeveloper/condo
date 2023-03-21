@@ -24,7 +24,9 @@ return [
         1 => 'New Application', 
         2 => 'For Payment', 
         3 => 'Lobby Guard',
-        4 => 'Done'
+        4 => 'Done',
+        5 => 'Finance Verification',
+        6 => 'Complex Manager Approval'
     ],
 
     'payment_status' => [
@@ -67,4 +69,22 @@ return [
         2 => 'Move Out',
         3 => 'Monthly Dues'
     ],
+
+    'occupant_types' => [
+        1 => 'Non-Member',
+        2 => 'Owner',
+        3 => 'Tenant',
+        4 => 'Authorized Representative',
+        5 => 'Immediate Family'
+    ],
+
+    'vehicles' => [
+        1 => 'Motorcycle',
+        2 => 'Car',
+        3 => 'Bike',
+        4 => 'B-Slot'
+    ],
+
+    
+    
 ];

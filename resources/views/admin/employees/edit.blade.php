@@ -17,7 +17,7 @@
 
     <div class="card card-bordered card-preview">
         <div class="card-inner">
-            <form action="{{ route('employees.update', ['employee' => $employee]) }}" class="row" method="POST">
+            <form action="{{ route('employees.update', ['employee' => $employee]) }}" class="row" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="col-4">
@@ -46,6 +46,10 @@
 
                 <div class="col-6 mt-2">
                     <x-select name="department_id" label="Department" :options="$departments" :is-required="true" :default-value="$employee->department->id"/>
+                </div>
+
+                <div class="col-4 mt-2">
+                    <x-input name="signature_src" label="Update Signature" type="file" />
                 </div>
 
                 <div class="col-12 mt-2">

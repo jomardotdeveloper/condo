@@ -105,14 +105,31 @@
     <x-input name="requested_by" label="Requested by" type="text" :default-value="$application->moveIn->requested_by"/>
 </div>
 
-<div class="col-3 mt-2">
+{{-- <div class="col-3 mt-2">
     <x-input name="approved_by" label="Approved by" type="text" :default-value="$application->moveIn->approved_by"/>
-</div>
+</div> --}}
 
 <div class="col-6 mt-2">
     <x-input name="additional_instruction" label="Additional Instruction by the unit owner, if any:" type="text" :default-value="$application->moveIn->additional_instruction"/>
 </div>
 
+<div class="col-6 mt-2">
+    <x-select name="cleared_by_id" label="Cleared By" :options="$administrative_officers" :default-value="$application->moveIn->cleared_by_id"/>
+</div>
+
+<div class="col-6 mt-2">
+    <x-select name="verified_by_id" label="Verified By" :options="$finance_departments" :default-value="$application->moveIn->verified_by_id"/>
+</div>
+
+
+<div class="col-6 mt-2">
+    <x-select name="approved_by_id" label="Approved By" :options="$executive_ao_complex_managers" :default-value="$application->moveIn->approved_by_id"/>
+</div>
+
+<div class="col-6 mt-2">
+    <x-select name="noted_by_id" label="Approved By" :options="$security_officers" :default-value="$application->moveIn->noted_by_id"/>
+</div>
+{{-- 
 <div class="col-4 mt-2">
     <x-input name="cleared_by" label="Cleared by" type="text" :default-value="$application->moveIn->cleared_by"/>
 </div>
@@ -124,4 +141,4 @@
 <div class="col-4 mt-2">
     <x-input name="noted_by" label="Noted by" type="text" :default-value="$application->moveIn->noted_by"/>
 </div>
-
+ --}}

@@ -17,7 +17,7 @@
 
     <div class="card card-bordered card-preview">
         <div class="card-inner">
-            <form action="{{ route('employees.store') }}" class="row" method="POST">
+            <form action="{{ route('employees.store') }}" class="row" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="col-4">
                     <x-input name="first_name" label="First Name" type="text" :is-required="true"/>
@@ -49,6 +49,10 @@
 
                 <div class="col-6 mt-2">
                     <x-select name="department_id" label="Department" :options="$departments" :is-required="true"/>
+                </div>
+
+                <div class="col-4 mt-2">
+                    <x-input name="signature_src" label="Signature" type="file" />
                 </div>
 
                 <div class="col-12 mt-2">

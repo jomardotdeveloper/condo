@@ -9,12 +9,17 @@
     ]"/>
 
     {{-- TITLE --}}
-    <x-datatable-head title="View Application" />
+    <x-datatable-head title="View Application ({{ $application->status_name }})" /> 
 
     {{-- ALERTS --}}
     @include('admin.includes.alerts')
 
     {{-- BUTTONS --}}
+    
+    <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#attachment-create-modal">
+        Add Attachment
+    </button>
+
     @if($application->status == App\Models\Application::NEW_APPLICATION && !$application->debit)
     <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#invoice-create-modal">
         Create Invoice
@@ -28,9 +33,19 @@
     @endif
 
     @if($application->status == App\Models\Application::FOR_PAYMENT)
-    <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#payment-create-modal">
-        Create Payment
-    </button>
+        @if(count($application->debit->subscriptions) > 0)
+        <a href="#" class="btn btn-primary mb-2">Show Payments</a>
+        @else
+        <button type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#payment-create-modal">
+            Create Payment
+        </button>
+        @endif
+    @endif
+
+    @if($application->status == App\Models\Application::FINANCE_VERIFICATION)
+    @if(count($application->debit->subscriptions) > 0)
+    <a href="{{ route('subscriptions.index') }}?debit_id={{ $application->debit->id }}" class="btn btn-primary mb-2">Show Payments</a>
+    @endif
     @endif
 
     @if($application->status == App\Models\Application::LOBBY_GUARD)
@@ -38,6 +53,29 @@
         Create User Account
     </button>
     @endif
+
+    {{-- SIGNATORY BUTTONS --}}
+    @if (in_array(auth()->user()->employee->id, $application->moveIn->signatories))
+    
+        @if (auth()->user()->employee->id == $application->moveIn->approved_by_id && !$application->moveIn->approved_is_signed)
+        <a href="{{ route('applications.signature', ['application_id' => $application->id, 'field' => 'approved_is_signed']) }}" class="btn btn-primary mb-2">Sign</a>
+        @endif
+
+        @if (auth()->user()->employee->id == $application->moveIn->verified_by_id && !$application->moveIn->verified_is_signed)
+        <a href="{{ route('applications.signature', ['application_id' => $application->id, 'field' => 'verified_is_signed']) }}" class="btn btn-primary mb-2">Sign</a>
+        @endif
+
+        @if (auth()->user()->employee->id == $application->moveIn->cleared_by_id && !$application->moveIn->cleared_is_signed)
+        <a href="{{ route('applications.signature', ['application_id' => $application->id, 'field' => 'cleared_is_signed']) }}" class="btn btn-primary mb-2">Sign</a>
+        @endif
+
+        @if (auth()->user()->employee->id == $application->moveIn->noted_by_id && !$application->moveIn->noted_is_signed)
+        <a href="{{ route('applications.signature', ['application_id' => $application->id, 'field' => 'noted_is_signed']) }}" class="btn btn-primary mb-2">Sign</a>
+        @endif
+
+    @endif
+    
+    
     
     <div class="card">
         <div class="card-inner">
@@ -48,6 +86,13 @@
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="tab" href="#tabItem2">Resident's Information Sheet</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#tabItem3">Attachments</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#tabItem4">Signatures</a>
+                </li>
+                
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="tabItem1">
@@ -58,6 +103,53 @@
                 <div class="tab-pane" id="tabItem2">
                     <div class="row">
                         @include('admin.applications.show-resident-information')
+                    </div>
+                </div>
+                <div class="tab-pane" id="tabItem3">
+                    <div class="row">
+                        @include('admin.applications.show-attachment')
+                    </div>
+                </div>
+                <div class="tab-pane" id="tabItem4">
+                    <div class="row">
+                        <div class="col-6">
+                            <h6>Cleared By:</h6>
+                            @if ($application->moveIn->cleared_is_signed)
+                            <img src="{{ $application->moveIn->clearedBy->signature_src }}" alt="signature" width="100px" height="100px"> <br/>
+                            @else
+                            <span class="lead">No Signature</span> <br/>
+                            @endif
+                            
+                            <strong><span class="lead">Administrative Officer</span></strong>
+                        </div>
+                        <div class="col-6">
+                            <h6>Checked and Verified By:</h6>
+                            @if ($application->moveIn->verified_is_signed)
+                            <img src="{{ $application->moveIn->verifiedBy->signature_src }}" alt="signature" width="100px" height="100px"> <br/>
+                            @else
+                            <span class="lead">No Signature</span> <br/>
+                            @endif
+                            <strong><span class="lead">Finance Department</span></strong>
+                        </div>
+                        <div class="col-6 mt-2">
+                            <h6>Approved By:</h6>
+                            @if ($application->moveIn->approved_is_signed)
+                            <img src="{{ $application->moveIn->approvedBy->signature_src }}" alt="signature" width="100px" height="100px"> <br/>
+                            @else
+                            <span class="lead">No Signature</span> <br/>
+                            @endif
+                            <strong><span class="lead">Executive AO/ Complex Manager</span></strong>
+                        </div>
+                        <div class="col-6  mt-2">
+                            <h6>Noted By:</h6>
+                            @if ($application->moveIn->noted_is_signed)
+                            <img src="{{ $application->moveIn->notedBy->signature_src }}" alt="signature" width="100px" height="100px"> <br/>
+                            @else
+                            <span class="lead">No Signature</span> <br/>
+                            @endif
+                            <strong><span class="lead">Security Office</span></strong>
+                        </div>
+                        {{-- @include('admin.applications.show-attachment') --}}
                     </div>
                 </div>
             </div>
@@ -115,7 +207,7 @@
         <input type="hidden" name="application_id" value="{{ $application->id }}"/>
         <input type="hidden" name="debit_id" value="{{ $application->debit ? $application->debit->id : '' }}"/>
         <input type="hidden" name="payment_status" value="2"/>
-
+        
         <div class="col-12">
             <x-input name="payment_method" label="Payment Method" type="text"  />
         </div>
@@ -130,6 +222,26 @@
 
         <div class="col-12 mt-2">
             <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+    </form>
+</x-modal>
+
+
+<x-modal id="attachment-create-modal" title="Add Attachment" footer="Attachment">
+    <form action="{{ route('applications.store-attachment') }}" class="row" method="POST" enctype="multipart/form-data">
+        @csrf
+        <input type="hidden" name="application_id" value="{{ $application->id }}"/>
+        <input type="hidden" name="status" value="{{ $application->status }}"/>
+        <div class="col-12">
+            <x-input name="name" label="Name" type="text"  :is-required="true"/>
+        </div>
+
+        <div class="col-12">
+            <x-input name="path" label="File" type="file" :is-required="true"/>
+        </div>
+
+        <div class="col-12 mt-2">
+            <button type="submit" class="btn btn-primary">Add</button>
         </div>
     </form>
 </x-modal>

@@ -13,6 +13,8 @@ class Application extends Model
     public const FOR_PAYMENT = 2;
     public const LOBBY_GUARD = 3;
     public const DONE = 4;
+    public const FINANCE_VERIFICATION = 5;
+    public const COMPLEX_MANAGER_APPROVAL = 6;
 
     protected $fillable = [
         'first_name',
@@ -25,6 +27,11 @@ class Application extends Model
         'status',
         'resident_information_id',
     ];
+
+    public function inAttachments()
+    {
+        return $this->hasMany(InAttachment::class);
+    }
 
     public function user()
     {
@@ -57,6 +64,10 @@ class Application extends Model
     public function getFullNameAttribute()
     {
         return $this->last_name . ' ' . $this->first_name . ' ' . $this->middle_name;
+    }
+
+    public function getStatusNameAttribute () {
+        return config('enums.application_status')[$this->status];
     }
    
 }

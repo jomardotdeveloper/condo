@@ -4,6 +4,7 @@
             <h6 class="overline-title text-primary-alt">MAIN</h6>
         </li>
         <x-menu name="Dashboard" logo="icon ni ni-growth-fill" url="{{ route('admin.dashboard') }}"/>
+        <x-menu name="Announcement" logo="icon ni ni-blogger" url="{{ route('announcements.index') }}"/>
 
         <x-menu name="Settings" logo="icon ni ni-setting-fill" url="#" :is-parent="true" :children="[
             array('name' => 'Setting', 'url' => route('settings.index')),
@@ -18,12 +19,16 @@
         <x-menu name="Move In" logo="icon ni ni-home-fill" url="#" :is-parent="true" :children="[
             array('name' => 'New Applications', 'url' =>  route('applications.index')  . '?status=1'),
             array('name' => 'For Payments', 'url' =>  route('applications.index')  . '?status=2'),
+            array('name' => 'Finance Verification', 'url' =>  route('applications.index')  . '?status=5'),
+            array('name' => 'Complex Manager Approval', 'url' =>  route('applications.index')  . '?status=6'),
             array('name' => 'Lobby Guard', 'url' =>  route('applications.index')  . '?status=3'),
         ]"/>
 
         <x-menu name="Move Out" logo="icon ni ni-delete-fill" url="#" :is-parent="true" :children="[
             array('name' => 'New Applications', 'url' =>  route('move-outs.index')  . '?status=1'),
             array('name' => 'For Payments', 'url' =>  route('move-outs.index')  . '?status=2'),
+            array('name' => 'Finance Verification', 'url' =>  route('move-outs.index')  . '?status=5'),
+            array('name' => 'Complex Manager Approval', 'url' =>  route('move-outs.index')  . '?status=6'),
             array('name' => 'Lobby Guard', 'url' =>  route('move-outs.index')  . '?status=3'),
         ]"/>
 

@@ -26,4 +26,27 @@ class Unit extends Model
     {
         return $this->belongsTo(Cluster::class);
     }
+
+    public function application ()
+    {
+        return $this->hasOne(Application::class);
+    }
+
+    public function moveOut ()
+    {
+        return $this->hasOne(MoveOut::class);
+    }
+
+    public function debits ()
+    {
+        return $this->hasMany(Debit::class);
+    }
+
+    // public function getNextDueDateAttribute()
+    // {
+    //     $lastDebit = $this->debits()->orderBy('due_date', 'desc')->first();
+    //     if($lastDebit == null)
+    //         return $this->cluster->reading_day;
+    //     return $lastDebit->due_date->addMonth();
+    // }
 }

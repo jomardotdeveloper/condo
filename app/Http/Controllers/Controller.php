@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class Controller extends BaseController
 {
@@ -135,4 +136,12 @@ class Controller extends BaseController
         
         return $payment;
     }
+
+
+    public function uploadFile($request, $file_name, $file_path) {
+        $path = Storage::putFile("public/" . $file_path, $request->file($file_name));
+        $path = Storage::url($path);
+        return $path;
+    }
+
 }

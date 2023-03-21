@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('positions', function (Blueprint $table) {
+        Schema::create('out_attachments', function (Blueprint $table) {
             $table->id();
-            $table->boolean('is_deletable')->default(true);
             $table->string('name');
+            $table->string('path');
+            $table->foreignId('move_out_id')->constrained('move_outs')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('positions');
+        Schema::dropIfExists('out_attachments');
     }
 };
