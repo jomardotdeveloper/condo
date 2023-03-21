@@ -28,7 +28,7 @@ class ApplicationController extends Controller
     {
         
         $status_ids = array_keys(config('enums.application_status'));
-
+        
         if(!isset($_GET['status'])) {
             return $this->redirectTo404();
         } else if(!in_array($_GET['status'], $status_ids)) {

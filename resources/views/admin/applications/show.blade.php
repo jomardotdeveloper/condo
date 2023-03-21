@@ -119,7 +119,7 @@
                             @else
                             <span class="lead">No Signature</span> <br/>
                             @endif
-                            
+                            <strong><span class="lead">{{ $application->moveIn->clearedBy->full_name }}</span></strong>
                             <strong><span class="lead">Administrative Officer</span></strong>
                         </div>
                         <div class="col-6">
@@ -129,6 +129,7 @@
                             @else
                             <span class="lead">No Signature</span> <br/>
                             @endif
+                            <strong><span class="lead">{{ $application->moveIn->verifiedBy->full_name }}</span></strong>
                             <strong><span class="lead">Finance Department</span></strong>
                         </div>
                         <div class="col-6 mt-2">
@@ -138,6 +139,7 @@
                             @else
                             <span class="lead">No Signature</span> <br/>
                             @endif
+                            <strong><span class="lead">{{ $application->moveIn->approvedBy->full_name }}</span></strong>
                             <strong><span class="lead">Executive AO/ Complex Manager</span></strong>
                         </div>
                         <div class="col-6  mt-2">
@@ -147,6 +149,7 @@
                             @else
                             <span class="lead">No Signature</span> <br/>
                             @endif
+                            <strong><span class="lead">{{ $application->moveIn->notedBy->full_name }}</span></strong>
                             <strong><span class="lead">Security Office</span></strong>
                         </div>
                         {{-- @include('admin.applications.show-attachment') --}}
