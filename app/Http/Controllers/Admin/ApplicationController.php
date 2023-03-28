@@ -13,6 +13,7 @@ use App\Models\Invoice;
 use App\Models\MoveIn;
 use App\Models\Position;
 use App\Models\ResidentInformation;
+use App\Models\Setting;
 use App\Models\Unit;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -80,7 +81,6 @@ class ApplicationController extends Controller
     public function store(Request $request)
     {
 
-
         $request->validate([
             'marital_status' => 'required',
             'gender' => 'required',
@@ -130,6 +130,35 @@ class ApplicationController extends Controller
         if(array_key_exists("househelper_driver_remarks" , $values))
             $values["househelper_driver_remarks"] = implode(",", $values["househelper_driver_remarks"]);
 
+
+        if($values["cleared_by_id"] == null){
+            $setting = Setting::where('key', 'administrative.officer')->first();
+            $user = User::where('email', $setting->value)->first();
+            $values["cleared_by_id"] = $user->employee->id;
+            // ADMINISTRATIVE OFFICER
+        }
+
+        if($values["verified_by_id"] == null){
+            $setting = Setting::where('key', 'finance.department')->first();
+            $user = User::where('email', $setting->value)->first();
+            $values["verified_by_id"] = $user->employee->id;
+            // FINANCE DEPARTMENT
+        }
+
+        if($values["approved_by_id"] == null){
+            $setting = Setting::where('key', 'executive.ao.complex.manager')->first();
+            $user = User::where('email', $setting->value)->first();
+            $values["approved_by_id"] = $user->employee->id;
+            // EXECUTIVE OFFICER
+        }
+
+        if($values["noted_by_id"] == null){
+            $setting = Setting::where('key', 'security.officer')->first();
+            $user = User::where('email', $setting->value)->first();
+            $values["noted_by_id"] = $user->employee->id;
+            // SECURITY OFFICER
+        }
+            
 
         $move_in = MoveIn::create($values);
         $resident = ResidentInformation::create($values);

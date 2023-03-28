@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\LeaveTypeController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\OwnerController;
 use App\Http\Controllers\Admin\PaymentController;
+use App\Http\Controllers\Admin\RenovationController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SubscriptionController;
 use App\Http\Controllers\Admin\SupplierItemController;
@@ -40,6 +41,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
+    // return view('welcome');
     return view('admin.login');
 })->name('login');
 
@@ -48,7 +50,7 @@ Route::get('/application', [LoginController::class, 'application'])->name('appli
 // ROUTE FOR ERRORS
 Route::get('503', ErrorController::class . '@maintenance')->name('error.maintenance');
 Route::get('404', ErrorController::class . '@notFound')->name('error.not-found');
-
+Route::get('403', ErrorController::class . '@forbidden')->name('error.forbidden');
 
 // ROUTE FOR AUTHENTICATION
 Route::post('/admin/login', [App\Http\Controllers\Admin\LoginController::class, 'authenticate'])->name('admin.login');
@@ -62,6 +64,7 @@ Route::prefix("/admin")->middleware('auth')->group(function () {
     Route::resource('units', UnitController::class);
     Route::resource('employees', EmployeeController::class);
     Route::resource('move-outs', MoveOutController::class);
+    Route::resource('renovations', RenovationController::class);
     
     Route::resource('announcements', AnnouncementController::class);
 

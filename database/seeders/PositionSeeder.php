@@ -36,5 +36,10 @@ class PositionSeeder extends Seeder
         Position::create([
             'name' => 'Administrator',
         ]);
+
+        Position::create([
+            'name' => 'Property Engineer',
+            'is_deletable' => false
+        ]);
     }
 }

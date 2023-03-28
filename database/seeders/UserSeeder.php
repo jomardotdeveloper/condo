@@ -88,5 +88,19 @@ class UserSeeder extends Seeder
             'user_id' => $user->id,
         ]);
 
+        $user = User::create([
+            'user_type' => User::ADMIN,
+            'email' => 'admin5@superuser.com',
+            'password' => Hash::make("123"),
+        ]);
+
+        Employee::create([
+            'first_name' => 'Property',
+            'last_name' => 'Engineer',
+            'position_id' => Position::PROPERTY_ENGINEER,
+            'department_id' => 1,
+            'user_id' => $user->id,
+        ]);
+
     }
 }

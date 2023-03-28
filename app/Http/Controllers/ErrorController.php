@@ -16,4 +16,9 @@ class ErrorController extends Controller
     {
         return view('admin.web-errors.404');
     }
+
+    public function forbidden()
+    {
+        return view('welcome');
+    }
 }

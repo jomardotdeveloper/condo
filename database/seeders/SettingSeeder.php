@@ -26,6 +26,32 @@ class SettingSeeder extends Seeder
                 'key' => 'water.fee',
                 'value' => "0",
             ],
+
+            [
+                'key' => 'administrative.officer',
+                'value' => "admin1@superuser.com",
+            ],
+
+            [
+                'key' => 'finance.department',
+                'value' => "admin2@superuser.com"
+            ],
+
+            [
+                'key' => 'executive.ao.complex.manager',
+                'value' => "admin3@superuser.com"
+            ],
+
+            [
+                'key' => 'security.officer',
+                'value' => "admin4@superuser.com"
+            ],
+
+            [
+                'key' => 'property.engineer',
+                'value' => "admin5@superuser.com"
+            ],
+
             
         ];
 

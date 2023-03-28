@@ -11,6 +11,7 @@ class Position extends Model
     public const FINANCE_DEPARTMENT = 2;
     public const EXECUTIVE_AO_COMPLEX_MANAGER = 3;
     public const SECURITY_OFFICER = 4;
+    public const PROPERTY_ENGINEER = 6;
     
     use HasFactory;
 
