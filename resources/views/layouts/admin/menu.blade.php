@@ -51,7 +51,7 @@
             array('name' => 'Lobby Guard', 'url' =>  route('renovations.index')  . '?status=3'),
         ]"/>
 
-        <x-menu name="Gate Pass" logo="icon ni ni-file" url="#" :is-parent="true" :children="[
+        <x-menu name="Gate Pass" logo="icon ni ni-file-plus" url="#" :is-parent="true" :children="[
             array('name' => 'New Applications', 'url' =>  route('error.forbidden')),
             array('name' => 'For Payments', 'url' =>  route('error.forbidden')),
             array('name' => 'Finance Verification', 'url' => route('error.forbidden')),
@@ -59,7 +59,7 @@
             array('name' => 'Lobby Guard', 'url' =>  route('error.forbidden')),
         ]"/>
 
-        <x-menu name="Motorcycle Parking Space" logo="icon ni ni-file" url="#" :is-parent="true" :children="[
+        <x-menu name="Motor Parking Space" logo="icon ni ni-file-text" url="#" :is-parent="true" :children="[
             array('name' => 'New Applications', 'url' =>  route('error.forbidden')),
             array('name' => 'For Payments', 'url' =>  route('error.forbidden')),
             array('name' => 'Finance Verification', 'url' => route('error.forbidden')),
@@ -67,7 +67,7 @@
             array('name' => 'Lobby Guard', 'url' =>  route('error.forbidden')),
         ]"/>
 
-        <x-menu name="Bike Parking Space" logo="icon ni ni-file" url="#" :is-parent="true" :children="[
+        <x-menu name="Bike Parking Space" logo="icon ni ni-files-fill" url="#" :is-parent="true" :children="[
             array('name' => 'New Applications', 'url' =>  route('error.forbidden')),
             array('name' => 'For Payments', 'url' =>  route('error.forbidden')),
             array('name' => 'Finance Verification', 'url' => route('error.forbidden')),
@@ -75,7 +75,7 @@
             array('name' => 'Lobby Guard', 'url' =>  route('error.forbidden')),
         ]"/>
 
-        <x-menu name="Refund Deposit" logo="icon ni ni-file" url="#" :is-parent="true" :children="[
+        <x-menu name="Refund Deposit" logo="icon ni ni-money" url="#" :is-parent="true" :children="[
             array('name' => 'New Applications', 'url' =>  route('error.forbidden')),
             array('name' => 'For Payments', 'url' =>  route('error.forbidden')),
             array('name' => 'Finance Verification', 'url' => route('error.forbidden')),
@@ -83,7 +83,7 @@
             array('name' => 'Lobby Guard', 'url' =>  route('error.forbidden')),
         ]"/>
 
-        <x-menu name="Cert. of Residency" logo="icon ni ni-file" url="#" :is-parent="true" :children="[
+        <x-menu name="Cert. of Residency" logo="icon ni ni-map" url="#" :is-parent="true" :children="[
             array('name' => 'New Applications', 'url' =>  route('error.forbidden')),
             array('name' => 'For Payments', 'url' =>  route('error.forbidden')),
             array('name' => 'Finance Verification', 'url' => route('error.forbidden')),
@@ -91,7 +91,7 @@
             array('name' => 'Lobby Guard', 'url' =>  route('error.forbidden')),
         ]"/>
 
-        <x-menu name="Cert. of Management" logo="icon ni ni-file" url="#" :is-parent="true" :children="[
+        <x-menu name="Cert. of Management" logo="icon ni ni-mail" url="#" :is-parent="true" :children="[
             array('name' => 'New Applications', 'url' =>  route('error.forbidden')),
             array('name' => 'For Payments', 'url' =>  route('error.forbidden')),
             array('name' => 'Finance Verification', 'url' => route('error.forbidden')),
@@ -99,13 +99,7 @@
             array('name' => 'Lobby Guard', 'url' =>  route('error.forbidden')),
         ]"/>
 
-        <x-menu name="Certificate of Residency" logo="icon ni ni-file" url="#" :is-parent="true" :children="[
-            array('name' => 'New Applications', 'url' =>  route('error.forbidden')),
-            array('name' => 'For Payments', 'url' =>  route('error.forbidden')),
-            array('name' => 'Finance Verification', 'url' => route('error.forbidden')),
-            array('name' => 'Complex Manager Approval', 'url' =>  route('error.forbidden')),
-            array('name' => 'Lobby Guard', 'url' =>  route('error.forbidden')),
-        ]"/>
+
 
         <li class="nk-menu-heading">
             <h6 class="overline-title text-primary-alt">Inventory</h6>
