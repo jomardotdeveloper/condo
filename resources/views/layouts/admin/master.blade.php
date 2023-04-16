@@ -22,7 +22,12 @@
                 </div>
                 <div class="nk-sidebar-element">
                     <div class="nk-sidebar-content">
+                        @if (auth()->user()->user_type == App\Models\User::ADMIN)
+                            
                         @include('layouts.admin.menu')
+                        @else
+                        @include('layouts.admin.menu-user')
+                        @endif
                     </div>
                 </div>
             </div>

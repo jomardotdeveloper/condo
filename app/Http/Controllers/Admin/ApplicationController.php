@@ -358,7 +358,8 @@ class ApplicationController extends Controller
 
     public function storeUser(Request $request) {
         $application = Application::find($request->application_id);
-        $this->createUser($request, User::USER);
+        $user = $this->createUser($request, User::USER);
+        $application->user_id = $user->id;
         $application->status = Application::DONE;
         $application->save();
         return redirect()->route('applications.index', ['status' => Application::LOBBY_GUARD])->with('success', 'User created successfully. Application status has been changed to "DONE".');

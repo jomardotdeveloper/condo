@@ -34,6 +34,21 @@ class Controller extends BaseController
         return $options;
     }
 
+    public function getOwnerSelectOptions ( ) {
+        $options = [];
+
+        $users = User::where('user_type', User::USER)->get();
+
+        foreach ($users as $user) {
+            $options[] = [
+                "id" => $user->id,
+                "name" => $user->application->full_name
+            ];
+        }
+
+        return $options;
+    }
+
     public function getEnumSelectOptions($enum)
     {
         $options = [];

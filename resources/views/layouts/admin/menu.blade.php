@@ -5,7 +5,7 @@
         </li>
         <x-menu name="Dashboard" logo="icon ni ni-growth-fill" url="{{ route('admin.dashboard') }}"/>
         <x-menu name="Announcement" logo="icon ni ni-blogger" url="{{ route('announcements.index') }}"/>
-
+        <x-menu name="Tickets" logo="icon ni ni-ticket-fill" url="{{ route('tickets.index') }}"/>
         <x-menu name="Settings" logo="icon ni ni-setting-fill" url="#" :is-parent="true" :children="[
             array('name' => 'Setting', 'url' => route('settings.index')),
             array('name' => 'Departments', 'url' => route('departments.index')),
@@ -33,13 +33,22 @@
         ]"/>
 
         <li class="nk-menu-heading">
+            <h6 class="overline-title text-primary-alt">Visitors</h6>
+        </li>
+
+        <x-menu name="Guests" logo="icon ni ni-users-fill" url="{{ route('guests.index') }}"/>
+        <x-menu name="Deliveries" logo="icon ni ni-box" url="{{ route('deliveries.index') }}"/>
+        <x-menu name="Tablet View" logo="icon ni ni-tablet" url="{{ route('tablets.index') }}"/>
+
+
+        <li class="nk-menu-heading">
             <h6 class="overline-title text-primary-alt">List of Owners</h6>
         </li>
 
         <x-menu name="Owners" logo="icon ni ni-user-fill" url="{{ route('owners.index') }}"/>
         <x-menu name="Tenants" logo="icon ni ni-users-fill" url="{{ route('tenants.index') }}"/>
 
-        <li class="nk-menu-heading">
+        {{-- <li class="nk-menu-heading">
             <h6 class="overline-title text-primary-alt">Permits</h6>
         </li>
 
@@ -99,7 +108,7 @@
             array('name' => 'Finance Verification', 'url' => route('error.forbidden')),
             array('name' => 'Complex Manager Approval', 'url' =>  route('error.forbidden')),
             array('name' => 'Lobby Guard', 'url' =>  route('error.forbidden')),
-        ]"/>
+        ]"/> --}}
 
 
 

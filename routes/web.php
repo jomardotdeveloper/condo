@@ -6,10 +6,12 @@ use App\Http\Controllers\Admin\ApplicationController;
 use App\Http\Controllers\Admin\BankController;
 use App\Http\Controllers\Admin\ClusterController;
 use App\Http\Controllers\Admin\DebitController;
+use App\Http\Controllers\Admin\DeliveryController;
 use App\Http\Controllers\Admin\DepartmentController;
 use App\Http\Controllers\Admin\ElectricController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\EntryController;
+use App\Http\Controllers\Admin\GuestController;
 use App\Http\Controllers\Admin\MoveOutController;
 use App\Http\Controllers\Admin\PositionController;
 use App\Http\Controllers\Admin\UnitController;
@@ -24,7 +26,9 @@ use App\Http\Controllers\Admin\RenovationController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SubscriptionController;
 use App\Http\Controllers\Admin\SupplierItemController;
+use App\Http\Controllers\Admin\TableViewController;
 use App\Http\Controllers\Admin\TenantController;
+use App\Http\Controllers\Admin\TicketController;
 use App\Http\Controllers\Admin\VendorController;
 use App\Http\Controllers\Admin\WaterController;
 use Illuminate\Support\Facades\Route;
@@ -65,7 +69,11 @@ Route::prefix("/admin")->middleware('auth')->group(function () {
     Route::resource('employees', EmployeeController::class);
     Route::resource('move-outs', MoveOutController::class);
     Route::resource('renovations', RenovationController::class);
-    
+    Route::resource('tickets', TicketController::class);
+    Route::resource('guests', GuestController::class);
+    Route::resource('deliveries', DeliveryController::class);
+    Route::resource('tablets', TableViewController::class);
+
     Route::resource('announcements', AnnouncementController::class);
 
     Route::resource('invoices', InvoiceController::class);
