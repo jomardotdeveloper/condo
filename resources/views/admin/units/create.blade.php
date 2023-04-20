@@ -47,13 +47,13 @@
                     <x-input name="floor_area" label="Floor Area" type="text" />
                 </div>
 
-                <div class="col-6 mt-2">
+                {{-- <div class="col-6 mt-2">
                     <x-input name="unit_association_fee" label="Unit Association Fee" type="number" />
                 </div>
 
                 <div class="col-6 mt-2">
                     <x-input name="unit_parking_fee" label="Unit Parking Fee" type="number" />
-                </div>
+                </div> --}}
 
                 <div class="col-6 mt-2">
                     <x-select name="status" label="Status" :options="$unit_status" :is-required="true"/>

@@ -14,10 +14,11 @@ class Select extends Component
     public $defaultValue;
     public $isRequired;
     public $onchange;
+    public $isReadonly;
     /**
      * Create a new component instance.
      */
-    public function __construct($label, $name, $options = [], $defaultValue = "", $isRequired = false, $onchange = "")
+    public function __construct($label, $name, $options = [], $defaultValue = "", $isRequired = false, $onchange = "", $isReadonly = false)
     {
         $this->label = $label;
         $this->name = $name;
@@ -25,6 +26,7 @@ class Select extends Component
         $this->defaultValue = $defaultValue;
         $this->isRequired = $isRequired;
         $this->onchange = $onchange;
+        $this->isReadonly = $isReadonly;
     }
 
     /**
@@ -39,6 +41,7 @@ class Select extends Component
             'value' => $this->defaultValue,
             'isRequired' => $this->isRequired,
             'onchange' => $this->onchange,
+            'isReadonly' => $this->isReadonly,
         ]);
     }
 }

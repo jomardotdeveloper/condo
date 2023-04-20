@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AnnouncementController;
 use App\Http\Controllers\Admin\ApplicationController;
 use App\Http\Controllers\Admin\BankController;
 use App\Http\Controllers\Admin\ClusterController;
+use App\Http\Controllers\Admin\DealerController;
 use App\Http\Controllers\Admin\DebitController;
 use App\Http\Controllers\Admin\DeliveryController;
 use App\Http\Controllers\Admin\DepartmentController;
@@ -73,6 +74,7 @@ Route::prefix("/admin")->middleware('auth')->group(function () {
     Route::resource('guests', GuestController::class);
     Route::resource('deliveries', DeliveryController::class);
     Route::resource('tablets', TableViewController::class);
+    Route::resource('dealers', DealerController::class);
 
     Route::resource('announcements', AnnouncementController::class);
 
@@ -108,6 +110,7 @@ Route::prefix("/admin")->middleware('auth')->group(function () {
     Route::post('/change-personal-info', [App\Http\Controllers\Admin\ProfileController::class, 'changePersonalInformation'])->name('admin.profile.change-personal-info');
     Route::post('/change-password', [App\Http\Controllers\Admin\ProfileController::class, 'changePassword'])->name('admin.profile.change-password');
     // API
+    Route::post('dealers/store-user', [DealerController::class, 'storeUser'])->name('dealers.store-user');
     Route::post('move-outs/store-invoice', [MoveOutController::class, 'storeInvoice'])->name('move-outs.store-invoice');
     Route::post('move-outs/store-payment', [MoveOutController::class, 'storePayment'])->name('move-outs.store-payment');
     Route::post('applications/store-invoice', [ApplicationController::class, 'storeInvoice'])->name('applications.store-invoice');

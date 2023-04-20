@@ -58,6 +58,33 @@
                                             <td>{{ $debit->formatted_total_amount }}</td>
                                         </tr>
                                     @endif
+
+                                    @if($debit->type == 3)
+                                        <tr>
+                                            <td>Monthly Due Fee</td>
+                                            <td>{{ $debit->monthly_due_fee }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Electricity Fee</td>
+                                            <td>{{ $debit->electric_fee }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Water Fee</td>
+                                            <td>{{ $debit->water_fee }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Parking Fee</td>
+                                            <td>{{ $debit->parking_fee }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Penalty</td>
+                                            <td>{{ $debit->penalty_fee }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Other</td>
+                                            <td>{{ $debit->other_fee }}</td>
+                                        </tr>
+                                    @endif
                                     
                                 </tbody>
                                 <tfoot>

@@ -14,6 +14,7 @@ class User extends Authenticatable
 
     public const USER = 1;
     public const ADMIN = 2;
+    public const VENDOR = 3;
 
     /**
      * The attributes that are mass assignable.
@@ -79,4 +80,49 @@ class User extends Authenticatable
     {
         return $this->leaves()->where('status', Leave::APPROVED)->where('start_date', '<=', date('Y-m-d'))->where('end_date', '>=', date('Y-m-d'))->exists();
     }
+
+    public function getParkingFeeAttribute()
+    {
+        return $this->application->unit->cluster->parking_rate;
+    }
+
+    public function getMonthlyDueFeeAttribute()
+    {
+        return $this->application->unit->cluster->monthly_due_rate * $this->application->unit->floor_area;
+    }
+
+    public function getElectricFeeAttribute()
+    {
+        $readings = Reading::where('unit_id', $this->application->unit->id)->where('date_from', '>=', date('Y-m-01'))->where('date_to', '<=', date('Y-m-t'))->where("is_electricity", true)->get();
+
+        $total = 0;
+
+        foreach($readings as $reading)
+        {
+            $total += $reading->reading;
+        }
+        return $this->application->unit->cluster->electricity_rate * $total;
+    }
+
+    public function getWaterFeeAttribute()
+    {
+        $readings = Reading::where('unit_id', $this->application->unit->id)->where('date_from', '>=', date('Y-m-01'))->where('date_to', '<=', date('Y-m-t'))->where("is_electricity", false)->get();
+
+        $total = 0;
+
+        foreach($readings as $reading)
+        {
+            $total += $reading->reading;
+        }
+        return $this->application->unit->cluster->water_rate * $total;
+    }
+
+    public function getPenaltyFeeAttribute()
+    {
+        return 25;
+    }
+
+
+
+
 }

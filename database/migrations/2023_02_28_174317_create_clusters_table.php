@@ -17,6 +17,10 @@ return new class extends Migration
             $table->string('unit_towers')->nullable();
             $table->integer('reading_day');
             $table->integer('due_date');
+            $table->string('monthly_due_rate')->default("0");
+            $table->string('parking_rate')->default("0");
+            $table->string('electricity_rate')->default("0");
+            $table->string('water_rate')->default("0");
             $table->timestamps();
         });
     }

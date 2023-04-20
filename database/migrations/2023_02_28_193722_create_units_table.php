@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('unit_room');
             $table->enum('unit_type', array_keys(config('enums.unit_types')));
             $table->string('floor_area')->nullable();
-            $table->string('unit_association_fee');
-            $table->string('unit_parking_fee');
+            // $table->string('unit_association_fee');
+            // $table->string('unit_parking_fee');
             $table->enum('status', array_keys(config('enums.unit_status')));
             $table->timestamps();
         });

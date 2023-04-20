@@ -7,7 +7,9 @@ use App\Models\Application;
 use App\Models\Debit;
 use App\Models\MoveOut;
 use App\Models\Unit;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class DebitController extends Controller
 {
@@ -16,6 +18,19 @@ class DebitController extends Controller
      */
     public function index()
     {
+        // $response = Http::post('https://api.semaphore.co/api/v4/messages', [
+        //     'apikey' => 'e31d0a06cbaeee5cedfd66e3d9922f11',
+        //     'number' => "09776229783",
+        //     'message' => "Sample",
+        //     'sendername' => 'SEMAPHORE'
+        // ]);
+        // $response = Http::post('https://api.semaphore.co/api/v4/messages', [
+        //     'apikey' => 'e31d0a06cbaeee5cedfd66e3d9922f11',
+        //     'number' => '09776229783',
+        //     'message' => "Sample message",
+        //     'sendername' => 'SEMAPHORE'
+        // ]);
+        // dd($response);
         return view('admin.debits.index', [
             'debits' => Debit::all(),
         ]);
@@ -34,9 +49,12 @@ class DebitController extends Controller
         } else if(!in_array($_GET['type'], $type_ids)) {
             return $this->redirectTo404();
         }
-
+        $user = null;
+        if(isset($_GET['user_id']))
+            $user = User::find($_GET['user_id']);
 
         return view('admin.debits.create', [
+            'user' => $user,
             'type' => $_GET['type'],
             'units' => $this->getSelectOptions(Unit::class, "unit_number"),
             'applications' => $this->getSelectOptions(
@@ -49,6 +67,7 @@ class DebitController extends Controller
                 "full_name",
                 MoveOut::where('status', Application::NEW_APPLICATION)->get()
             ),
+            'users' => $this->getOwnerSelectOptions(),
         ]);
     }
 
@@ -67,8 +86,15 @@ class DebitController extends Controller
             $move_out->status = Application::FOR_PAYMENT;
             $move_out->save();
         }
+        $values = $request->all();
+        if(intval($request->type) == Debit::MONTHLY_DUE)
+        {
+            
+            $values['customer_name'] = User::find($request->user_id)->application->full_name;
+        }
+            
 
-        Debit::create($request->all());
+        Debit::create($values);
 
         return redirect()->route('debits.index')->with('success', 'Invoice created successfully.');
 
@@ -88,7 +114,8 @@ class DebitController extends Controller
      */
     public function edit(Debit $debit)
     {
-        return view('admin.debits.edit', compact('debit'));
+        $users  = $this->getOwnerSelectOptions();
+        return view('admin.debits.edit', compact('debit', 'users'));
     }
 
     /**

@@ -14,18 +14,18 @@ class SettingSeeder extends Seeder
     public function run(): void
     {
         $settings = [
-            [
-                'key' => 'monthly.due',
-                'value' => "0",
-            ],
-            [
-                'key' => 'electricity.fee',
-                'value' => "0",
-            ],
-            [
-                'key' => 'water.fee',
-                'value' => "0",
-            ],
+            // [
+            //     'key' => 'monthly.due',
+            //     'value' => "0",
+            // ],
+            // [
+            //     'key' => 'electricity.fee',
+            //     'value' => "0",
+            // ],
+            // [
+            //     'key' => 'water.fee',
+            //     'value' => "0",
+            // ],
 
             [
                 'key' => 'administrative.officer',

@@ -43,6 +43,10 @@ class ClusterController extends Controller
             'unit_towers' => $request->unit_towers,
             'reading_day' => $request->reading_day,
             'due_date' => $request->due_date,
+            'monthly_due_rate' => $request->monthly_due_rate,
+            'parking_rate' => $request->parking_rate,
+            'electricity_rate' => $request->electricity_rate,
+            'water_rate' => $request->water_rate,
         ]);
 
         return redirect()->route('clusters.index')->with('success', 'Cluster created successfully.');
@@ -75,6 +79,10 @@ class ClusterController extends Controller
             'unit_towers' => $request->unit_towers,
             'reading_day' => $request->reading_day,
             'due_date' => $request->due_date,
+            'monthly_due_rate' => $request->monthly_due_rate,
+            'parking_rate' => $request->parking_rate,
+            'electricity_rate' => $request->electricity_rate,
+            'water_rate' => $request->water_rate,
         ]);
 
         return redirect()->route('clusters.index')->with('success', 'Cluster updated successfully.');

@@ -17,8 +17,8 @@ class Unit extends Model
         'unit_room',
         'unit_type',
         'floor_area',
-        'unit_association_fee',
-        'unit_parking_fee',
+        // 'unit_association_fee',
+        // 'unit_parking_fee',
         'status',
     ];
 

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->float('penalty_fee')->default(0);
             $table->float('other_fee')->default(0);
             $table->text('description')->nullable();
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
             $table->foreignId('unit_id')->nullable()->constrained('units')->onDelete('set null');
             $table->foreignId('application_id')->nullable()->constrained('applications')->onDelete('set null');
             $table->foreignId('move_out_id')->nullable()->constrained('move_outs')->onDelete('set null');

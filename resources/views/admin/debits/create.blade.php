@@ -21,7 +21,7 @@
                 @csrf
                 <input type="hidden" name="type" value="{{ $_GET['type'] }}" />
 
-               
+                
                 <div class="col-6">
                     <x-input name="due_date" label="Due Date" type="date" :is-required="true"/>
                 </div>
@@ -30,8 +30,30 @@
                 {{-- MONTHLY DUES --}}
                 @if ($_GET['type'] == 3)
                     <div class="col-6">
-                        <x-select name="unit_id" label="Unit" :options="$units" :is-required="true"/>
+                        <x-select name="user_id" label="User" :options="$users" :is-required="true" :default-value="$user ? $user->id : ''"/>
                     </div>
+                    <div class="col-6">
+                        <x-input name="parking_fee" label="Parking Fee" type="number" :is-required="true" :is-readonly="true" :default-value="$user ? $user->parking_fee : 0"/>
+                    </div>
+                    <div class="col-6">
+                        <x-input name="monthly_due_fee" label="Monthly Due Fee" type="number" :is-required="true" :is-readonly="true" :default-value="$user ? $user->monthly_due_fee : 0"/>
+                    </div>
+                    <div class="col-6">
+                        <x-input name="electric_fee" label="Electricity Fee" type="number" :is-required="true" :is-readonly="true" :default-value="$user ? $user->electric_fee : 0"/>
+                    </div>
+                    <div class="col-6">
+                        <x-input name="water_fee" label="Water Fee" type="number" :is-required="true" :is-readonly="true" :default-value="$user ? $user->water_fee : 0"/>
+                    </div>
+                    <div class="col-6">
+                        <x-input name="penalty_fee" label="Penalty" type="number" :is-required="true" :default-value="0"/>
+                    </div>
+                    <div class="col-6">
+                        <x-input name="other_fee" label="Other" type="number" :is-required="true" :default-value="0"/>
+                    </div>
+                    <div class="col-6">
+                        <x-input name="description" label="Internal Notes" type="text" />
+                    </div>
+                    
                 @endif
 
                 {{-- MOVE IN --}}
@@ -63,4 +85,11 @@
 </div>
 
 @endsection
+@push('scripts')
+    <script>
+        $('#user_id').on('change', function(){
+            window.location.href = "{{ route('debits.create') }}?type=3&user_id=" + $(this).val();
+        });
+    </script>
+@endpush
 

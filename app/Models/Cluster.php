@@ -13,7 +13,11 @@ class Cluster extends Model
         'name',
         'unit_towers',
         'reading_day',
-        'due_date'
+        'due_date',
+        'monthly_due_rate',
+        'parking_rate',
+        'electricity_rate',
+        'water_rate',
     ];
 
     public function getUnitTowersArrayAttribute()

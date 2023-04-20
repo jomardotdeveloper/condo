@@ -48,13 +48,13 @@
                     <x-input name="floor_area" label="Floor Area" type="text" default-value="{{ $unit->floor_area }}"/>
                 </div>
 
-                <div class="col-6 mt-2">
+                {{-- <div class="col-6 mt-2">
                     <x-input name="unit_association_fee" label="Unit Association Fee" type="number" default-value="{{ $unit->unit_association_fee }}"/>
                 </div>
 
                 <div class="col-6 mt-2">
                     <x-input name="unit_parking_fee" label="Unit Parking Fee" type="number" default-value="{{ $unit->unit_parking_fee }}"/>
-                </div>
+                </div> --}}
 
                 <div class="col-6 mt-2">
                     <x-select name="status" label="Status" :options="$unit_status" :is-required="true" default-value="{{ $unit->status }}"/>

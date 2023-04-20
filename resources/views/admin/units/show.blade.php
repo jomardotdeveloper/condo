@@ -29,8 +29,8 @@
                             <x-show-item label="Unit Room" value="{{ $unit->unit_room }}"/>
                             <x-show-item label="Unit Type" value="{{ config('enums.unit_types')[$unit->unit_type] }}"/>
                             <x-show-item label="Floor Area" value="{{ $unit->cluster->name }}"/>
-                            <x-show-item label="Unit Association Fee" value="{{ $unit->cluster->name }}"/>
-                            <x-show-item label="Unit Parking Fee" value="{{ $unit->cluster->name }}"/>
+                            {{-- <x-show-item label="Unit Association Fee" value="{{ $unit->cluster->name }}"/>
+                            <x-show-item label="Unit Parking Fee" value="{{ $unit->cluster->name }}"/> --}}
                             <x-show-item label="Status" value="{{ config('enums.unit_status')[$unit->status] }}"/>
                         </div>
                     </div>

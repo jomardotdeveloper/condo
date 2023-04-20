@@ -29,7 +29,13 @@ class Debit extends Model
         'move_out_id',
         'type',
         'customer_name',
+        'user_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function unit()
     {

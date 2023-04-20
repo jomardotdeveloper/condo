@@ -1,7 +1,7 @@
 <div class="form-group">
     <label class="form-label">{{ $label }}</label>
     <div class="form-control-wrap">
-        <select class="form-select js-select2" id="{{ $name }}" onchange="{{ $onchange }}" name="{{ $name }}" data-search="on" {{ $isRequired ? "required" : "" }}>
+        <select class="form-select js-select2" id="{{ $name }}" onchange="{{ $onchange }}" name="{{ $name }}" data-search="on" {{ $isRequired ? "required" : "" }} >
             <option></option>
             @foreach ($options as $option)
                 @if($defaultValue == $option['id'])

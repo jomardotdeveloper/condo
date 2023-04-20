@@ -113,12 +113,20 @@
 
 
         <li class="nk-menu-heading">
-            <h6 class="overline-title text-primary-alt">Inventory</h6>
+            <h6 class="overline-title text-primary-alt">Purchasing</h6>
         </li>
-        <x-menu name="Vendors" logo="icon ni ni-user-list-fill" url="#" :is-parent="true" :children="[
+        <x-menu name="For Accreditation" logo="icon ni ni-user-list-fill" url="#" :is-parent="true" :children="[
+            array('name' => 'New Application', 'url' =>  route('dealers.index')  . '?status=1' ),
+            array('name' => 'Accredited Vendors', 'url' =>  route('dealers.index')  . '?status=2'  ),
+            array('name' => 'For Renewal', 'url' =>  route('dealers.index')  . '?status=3'  ),
+            array('name' => 'Bidding', 'url' =>  '#' ),
+            array('name' => 'Purchase Orders', 'url' =>  '#' ),
+            array('name' => 'Vendor Invoices', 'url' =>  '#' ),
+        ]"/>
+        {{-- <x-menu name="Vendors" logo="icon ni ni-user-list-fill" url="#" :is-parent="true" :children="[
             array('name' => 'Vendors', 'url' =>  route('vendors.index') ),
             array('name' => 'Supplier Items', 'url' =>  route('supplier-items.index') ),
-        ]"/>
+        ]"/> --}}
 
 
         <li class="nk-menu-heading">

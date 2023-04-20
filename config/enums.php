@@ -3,7 +3,8 @@
 return [
     'user_types' => [
         1 => 'User',
-        2 => 'Admin'
+        2 => 'Admin',
+        3 => 'Vendor'
     ],
 
     'unit_types' => [

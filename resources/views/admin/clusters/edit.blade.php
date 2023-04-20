@@ -36,6 +36,22 @@
                     <x-input name="due_date" label="Utilities due date" type="number" :is-required="true" :default-value="$cluster->due_date"/>
                 </div>
 
+                <div class="col-6 mt-2">
+                    <x-input name="monthly_due_rate" label="Monthly Due Rate" type="number" :is-required="true" :default-value="$cluster->monthly_due_rate"/>
+                </div>
+
+                <div class="col-6 mt-2">
+                    <x-input name="parking_rate" label="Parking Rate " type="number" :is-required="true" :default-value="$cluster->parking_rate"/>
+                </div>
+
+                <div class="col-6 mt-2">
+                    <x-input name="electricity_rate" label="Electricity Rate" type="number" :is-required="true" :default-value="$cluster->electricity_rate"/>
+                </div>
+
+                <div class="col-6 mt-2">
+                    <x-input name="water_rate" label="Water Rate" type="number" :is-required="true" :default-value="$cluster->water_rate"/>
+                </div>
+
                 <div class="col-12 mt-2">
                     <input type="submit" value="Save Changes" class="btn btn-primary" />
                 </div>
