@@ -45,7 +45,7 @@
                         <x-input name="water_fee" label="Water Fee" type="number" :is-required="true" :is-readonly="true" :default-value="$user ? $user->water_fee : 0"/>
                     </div>
                     <div class="col-6">
-                        <x-input name="penalty_fee" label="Penalty" type="number" :is-required="true" :default-value="0"/>
+                        <x-input name="penalty_fee" label="Penalty" type="number" :is-required="true" :default-value="$user ? $user->penalty_fee : 0"/>
                     </div>
                     <div class="col-6">
                         <x-input name="other_fee" label="Other" type="number" :is-required="true" :default-value="0"/>

@@ -26,7 +26,10 @@ class SettingSeeder extends Seeder
             //     'key' => 'water.fee',
             //     'value' => "0",
             // ],
-
+            [
+                'key' => 'penalty.fee.percentage',
+                'value' => "0",
+            ],
             [
                 'key' => 'administrative.officer',
                 'value' => "admin1@superuser.com",

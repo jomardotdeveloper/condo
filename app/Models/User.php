@@ -83,7 +83,13 @@ class User extends Authenticatable
 
     public function getParkingFeeAttribute()
     {
-        return $this->application->unit->cluster->parking_rate;
+        $total = 0;
+        $parkings = Parking::where('user_id', $this->id)->get();
+        foreach($parkings as $parking)
+        {
+            $total += ($parking->parking_floor_area * $this->application->unit->cluster->parking_rate) ; 
+        }
+        return $total;
     }
 
     public function getMonthlyDueFeeAttribute()
@@ -119,7 +125,25 @@ class User extends Authenticatable
 
     public function getPenaltyFeeAttribute()
     {
-        return 25;
+        $penalty = 0;
+        $penalty_percentage = Setting::where('key', 'penalty.fee.percentage')->first()->value / 100 ;
+        $lastInvoice = Debit::where('user_id', $this->id)->where('type', Debit::MONTHLY_DUE)->orderBy('id', 'desc')->first();
+        if ($lastInvoice) 
+        {
+
+            if($lastInvoice->is_overdue)
+            {
+                if ($lastInvoice->is_paid) 
+                {
+                    $penalty = $lastInvoice->total_amount * $penalty_percentage;
+                }
+                else
+                {
+                    $penalty = $lastInvoice->total_amount + ($lastInvoice->total_amount * $penalty_percentage);
+                }
+            }
+        }
+        return $penalty;
     }
 
 

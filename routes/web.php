@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\LeaveController;
 use App\Http\Controllers\Admin\LeaveTypeController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\OwnerController;
+use App\Http\Controllers\Admin\ParkingController;
 use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\RenovationController;
 use App\Http\Controllers\Admin\SettingController;
@@ -75,6 +76,7 @@ Route::prefix("/admin")->middleware('auth')->group(function () {
     Route::resource('deliveries', DeliveryController::class);
     Route::resource('tablets', TableViewController::class);
     Route::resource('dealers', DealerController::class);
+    Route::resource('parkings', ParkingController::class);
 
     Route::resource('announcements', AnnouncementController::class);
 

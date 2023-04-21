@@ -63,6 +63,8 @@ class SubscriptionController extends Controller
                         'status' => Application::FINANCE_VERIFICATION,
                     ]);
                 }
+            }else {
+                $debit->subscriptions()->create($request->all());
             }
         }else {
             Subscription::create($request->all());

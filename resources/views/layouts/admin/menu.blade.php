@@ -32,6 +32,8 @@
             array('name' => 'Lobby Guard', 'url' =>  route('move-outs.index')  . '?status=3'),
         ]"/>
 
+        <x-menu name="Parking" logo="icon ni ni-truck" url="{{ route('parkings.index') }}"/>   
+
         <li class="nk-menu-heading">
             <h6 class="overline-title text-primary-alt">Visitors</h6>
         </li>

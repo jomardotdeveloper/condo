@@ -90,7 +90,18 @@ class Debit extends Model
     public function getIsPaidAttribute()
     {
         return $this->subscriptions()->where('payment_status', Subscription::PAID)->sum('amount') >= $this->totalAmount;
-    } 
+    }
+    
+    public function getIsOverdueAttribute()
+    {
+        $isNotPaidAndOverdue = $this->due_date < now() && !$this->isPaid;
+
+        if($isNotPaidAndOverdue) {
+            return true;
+        }
+
+        return $this->due_date < $this->subscriptions()->latest()->first()->created_at;
+    }
 
 
 
