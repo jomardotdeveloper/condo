@@ -52,6 +52,11 @@
                     <x-input name="water_rate" label="Water Rate" type="number" :is-required="true" :default-value="$cluster->water_rate"/>
                 </div>
 
+
+                <div class="col-6 mt-2">
+                    <x-input name="penalty_rate" label="Penalty Rate" type="number" :is-required="true" :default-value="$cluster->penalty_rate"/>
+                </div>
+
                 <div class="col-12 mt-2">
                     <input type="submit" value="Save Changes" class="btn btn-primary" />
                 </div>

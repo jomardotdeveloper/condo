@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('parking_rate')->default("0");
             $table->string('electricity_rate')->default("0");
             $table->string('water_rate')->default("0");
+            $table->string('penalty_rate')->default("0");
             $table->timestamps();
         });
     }

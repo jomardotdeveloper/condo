@@ -47,6 +47,7 @@ class ClusterController extends Controller
             'parking_rate' => $request->parking_rate,
             'electricity_rate' => $request->electricity_rate,
             'water_rate' => $request->water_rate,
+            'penalty_rate' => $request->penalty_rate,
         ]);
 
         return redirect()->route('clusters.index')->with('success', 'Cluster created successfully.');
@@ -83,6 +84,7 @@ class ClusterController extends Controller
             'parking_rate' => $request->parking_rate,
             'electricity_rate' => $request->electricity_rate,
             'water_rate' => $request->water_rate,
+            'penalty_rate' => $request->penalty_rate,
         ]);
 
         return redirect()->route('clusters.index')->with('success', 'Cluster updated successfully.');

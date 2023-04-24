@@ -126,7 +126,7 @@ class User extends Authenticatable
     public function getPenaltyFeeAttribute()
     {
         $penalty = 0;
-        $penalty_percentage = Setting::where('key', 'penalty.fee.percentage')->first()->value / 100 ;
+        $penalty_percentage = $this->application->unit->cluster->penalty_rate / 100 ;
         $lastInvoice = Debit::where('user_id', $this->id)->where('type', Debit::MONTHLY_DUE)->orderBy('id', 'desc')->first();
         if ($lastInvoice) 
         {

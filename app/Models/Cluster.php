@@ -18,6 +18,7 @@ class Cluster extends Model
         'parking_rate',
         'electricity_rate',
         'water_rate',
+        'penalty_rate',
     ];
 
     public function getUnitTowersArrayAttribute()
