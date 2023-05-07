@@ -49,7 +49,8 @@
             <div class="form-group text-center">
                 <button type="submit" class="btn btn-lg btn-primary btn-block mb-2">Sign in</button>
 
-                <a href="{{ route('application') }}"  style="font-weight:bold;">Submit Application</a>
+                <a href="{{ route('application') }}"  style="font-weight:bold;">Submit Application</a> <br>
+                <a href="{{ route('vendor.application') }}"  style="font-weight:bold;">Submit Vendor Application</a>
             </div>
         </form><!-- form -->
     </div><!-- .nk-block -->

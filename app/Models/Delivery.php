@@ -23,7 +23,8 @@ class Delivery extends Model
         'reference_number',
         'notes',
         'expected_arrival_date',
-        'plate_number'
+        'plate_number',
+        'is_approved'
     ];
 
     public function unit()

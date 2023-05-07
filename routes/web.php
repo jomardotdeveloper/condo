@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AnnouncementController;
 use App\Http\Controllers\Admin\ApplicationController;
 use App\Http\Controllers\Admin\BankController;
 use App\Http\Controllers\Admin\ClusterController;
+use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\DealerController;
 use App\Http\Controllers\Admin\DebitController;
 use App\Http\Controllers\Admin\DeliveryController;
@@ -24,6 +25,7 @@ use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\OwnerController;
 use App\Http\Controllers\Admin\ParkingController;
 use App\Http\Controllers\Admin\PaymentController;
+use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\RenovationController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SubscriptionController;
@@ -34,7 +36,11 @@ use App\Http\Controllers\Admin\TicketController;
 use App\Http\Controllers\Admin\VendorController;
 use App\Http\Controllers\Admin\WaterController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\User\DebitController as UserDebitController;
+use App\Http\Controllers\User\DeliveryController as UserDeliveryController;
+use App\Http\Controllers\User\GuestController as UserGuestController;
+use App\Http\Controllers\User\PaymentController as UserPaymentController;
+use App\Http\Controllers\User\ParkingController as UserParkingController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -52,6 +58,7 @@ Route::get('/', function () {
 })->name('login');
 
 Route::get('/application', [LoginController::class, 'application'])->name('application');
+Route::get('/vendorapplication', [LoginController::class, 'vendorApplication'])->name('vendor.application');
 
 // ROUTE FOR ERRORS
 Route::get('503', ErrorController::class . '@maintenance')->name('error.maintenance');
@@ -62,8 +69,23 @@ Route::get('403', ErrorController::class . '@forbidden')->name('error.forbidden'
 Route::post('/admin/login', [App\Http\Controllers\Admin\LoginController::class, 'authenticate'])->name('admin.login');
 Route::post('/admin/logout', [App\Http\Controllers\Admin\LoginController::class, 'logout'])->name('admin.logout');
 Route::resource('applications', ApplicationController::class);
+Route::resource('dealers', DealerController::class);
+Route::resource('tablets', TableViewController::class);
 
 Route::prefix("/admin")->middleware('auth')->group(function () {
+    // USER ROUTES
+    Route::resource('user-debits', UserDebitController::class);
+    Route::resource('user-deliveries', UserDeliveryController::class);
+    Route::resource('user-guests', UserGuestController::class);
+    Route::resource('user-payments', UserPaymentController::class);
+    Route::resource('user-parkings', UserParkingController::class);
+
+    // API
+    Route::post('user-debits/store-payment', [UserDebitController::class, 'storePayment'])->name('user-debits.store-payment');
+
+
+    // END OF USER ROUTES
+
     Route::resource('positions', PositionController::class);
     Route::resource('departments', DepartmentController::class);
     Route::resource('clusters', ClusterController::class);
@@ -74,9 +96,15 @@ Route::prefix("/admin")->middleware('auth')->group(function () {
     Route::resource('tickets', TicketController::class);
     Route::resource('guests', GuestController::class);
     Route::resource('deliveries', DeliveryController::class);
-    Route::resource('tablets', TableViewController::class);
-    Route::resource('dealers', DealerController::class);
+
+    Route::resource('projects', ProjectController::class);
+    
+    
+    
+    
     Route::resource('parkings', ParkingController::class);
+
+    Route::resource('comments', CommentController::class);
 
     Route::resource('announcements', AnnouncementController::class);
 

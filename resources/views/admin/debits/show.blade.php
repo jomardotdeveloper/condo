@@ -3,7 +3,6 @@
 <div class="nk-block nk-block-lg">
     {{-- BREADCRUMB --}}
     <x-breadcrumb :items="[
-        array('name' => 'Finance', 'url' => 'javascript:void(0);'),
         array('name' => 'Invoices', 'url' => route('debits.index')),
         array('name' => 'View', 'url' => route('debits.create')),
     ]"/>
@@ -20,7 +19,7 @@
                 <div class="invoice-wrap">
                     {{-- LOGO --}}
                     <div class="invoice-brand text-center">
-                        <img src="./images/logo-dark.png" srcset="./images/logo-dark2x.png 2x" alt="">
+                        <img src="{{ asset('admin/images/cgs.png') }}" srcset="{{ asset('admin/images/cgs.png') }} 4x" alt="">
                     </div>
                     <div class="invoice-head">
                         <div class="invoice-contact">
@@ -79,6 +78,10 @@
                                         <tr>
                                             <td>Penalty</td>
                                             <td>{{ $debit->penalty_fee }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Recollection Fee</td>
+                                            <td>{{ $debit->recollection_fee }}</td>
                                         </tr>
                                         <tr>
                                             <td>Other</td>

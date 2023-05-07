@@ -36,6 +36,8 @@
             </div>
         </div>
     </div>
+
+    <x-comment model="parking" :record=" $parking->id " :comments="$comments" />
 </div>
 
 @endsection

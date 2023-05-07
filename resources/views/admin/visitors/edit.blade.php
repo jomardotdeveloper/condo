@@ -30,6 +30,12 @@
                     <x-select name="unit_id" label="Unit" :options="$units" :is-required="true" :default-value="$guest->unit_id"/>
                 </div>
 
+                @if (auth()->user()->user_type == 2)
+                <div class="col-6">
+                    <x-select name="is_approved" label="Approved" :options="[['id' => 1, 'name' => 'YES'], ['id' => 2, 'name' => 'NO']]"  :is-required="true"  :default-value="$guest->is_approved ? 1 : 2"/>
+                </div>
+                @endif
+                
                 <div class="col-6 mt-2">
                     <x-select name="valid_id" label="Valid ID" :options="$valid_ids" :is-required="true" :default-value="$guest->valid_id"/>
                 </div>

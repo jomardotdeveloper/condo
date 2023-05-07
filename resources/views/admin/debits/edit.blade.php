@@ -28,10 +28,40 @@
                 </div>
 
 
+
+
                 {{-- MONTHLY DUES --}}
                 @if ($debit->type == 3)
                     <div class="col-6">
-                        <x-select name="unit_id" label="Unit" :options="$units" :is-required="true"/>
+                        <x-select name="user_id" label="User" :options="$users" :is-required="true" :is-readonly="true" :default-value="$debit->user_id"/>
+                    </div>
+                    <div class="col-6">
+                        <x-input name="parking_fee" label="Parking Fee" type="number" :is-required="true" :is-readonly="true" :default-value="$debit->parking_fee"/>
+                    </div>
+                    <div class="col-6">
+                        <x-input name="monthly_due_fee" label="Monthly Due Fee" type="number" :is-required="true" :is-readonly="true" :default-value="$debit->monthly_due_fee"/>
+                    </div>
+                    <div class="col-6">
+                        <x-input name="electric_fee" label="Electricity Fee" type="number" :is-required="true" :is-readonly="true" :default-value="$debit->electric_fee"/>
+                    </div>
+                    <div class="col-6">
+                        <x-input name="water_fee" label="Water Fee" type="number" :is-required="true" :is-readonly="true" :default-value="$debit->water_fee"/>
+                    </div>
+                    <div class="col-6">
+                        <x-input name="penalty_fee" label="Penalty" type="number" :is-required="true" :default-value="$debit->penalty_fee"/>
+                    </div>
+                    <div class="col-6">
+                        <x-input name="recollection_fee" label="Recollection Fee" type="number" :is-required="true" :default-value="$debit->recollection_fee"/>
+                    </div>
+                    <div class="col-6">
+                        <x-input name="other_fee" label="Other" type="number" :is-required="true" :default-value="$debit->other_fee"/>
+                    </div>
+                    <div class="col-6">
+                        <x-select name="show_in_portal" label="Show In Portal" :options="[['id' => 1, 'name' => 'YES'], ['id' => 2, 'name' => 'NO']]"  :is-required="true" :default-value="$debit->show_in_portal ? 1 : 2"/>
+                    </div>
+
+                    <div class="col-6">
+                        <x-input name="description" label="Internal Notes" type="text" :default-value="$debit->description"/>
                     </div>
                 @endif
 

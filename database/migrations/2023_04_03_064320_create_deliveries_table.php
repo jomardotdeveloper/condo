@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('notes')->nullable();
             $table->dateTime('expected_arrival_date')->nullable();
             $table->string('plate_number')->nullable();
+            $table->boolean('is_approved')->default(false);
             $table->timestamps();
         });
     }

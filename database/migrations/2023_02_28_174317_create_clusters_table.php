@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('electricity_rate')->default("0");
             $table->string('water_rate')->default("0");
             $table->string('penalty_rate')->default("0");
+            $table->string('recollection_fee')->default("0");
             $table->timestamps();
         });
     }

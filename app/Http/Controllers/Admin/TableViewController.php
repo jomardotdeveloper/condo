@@ -16,9 +16,10 @@ class TableViewController extends Controller
      */
     public function index()
     {
+        
         return view('admin.tablets.index', [
-            'guests' => Visitation::all(),
-            'deliveries' => Delivery::all(),
+            'guests' => Visitation::where("is_approved", true)->get(),
+            'deliveries' => Delivery::where("is_approved", true)->get(),
         ]);
     }
 
@@ -27,11 +28,15 @@ class TableViewController extends Controller
      */
     public function create()
     {
+
+        // dd();
+        
         return view('admin.tablets.create', [
             'units' => $this->getSelectOptions(Unit::class, "unit_number"),
             'valid_ids' => $this->getEnumSelectOptions(Visitation::VALID_IDS),
-            'visitors' => $this->getSelectOptions(Visitor::class, "full_name"),
+            'visitors' => $this->getSelectOptions(Visitor::class, "email"),
             'types' => $this->getEnumSelectOptions(Delivery::TYPE),
+            'emails' => Visitor::all()->pluck('email', 'id')->toArray(),
         ]);
     }
 
@@ -40,7 +45,34 @@ class TableViewController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $is_visitation = $request->type == "visitation";
+        // dd($request->all());
+        if($is_visitation) {
+            $visitor = null;
+            if (!$request->is_returnee) {
+                $request->validate([
+                    'email' => 'required|email|unique:visitors'
+                ]);
+                $values = $request->all();
+                $visitor = Visitor::create($values);
+            } else {
+                $visitor = Visitor::find($request->visitor_id);
+            }
+            // dd($visitor->id);
+            $values = $request->all();
+            $values['visitor_id'] = $visitor->id;
+            $values['is_approved'] = true;
+            $values['expected_arrival_date'] = date('Y-m-d H:i:s');
+            // dd($values);
+            Visitation::create($values);
+            return redirect()->route('tablets.index', ['type' => 'visitor'])->with('success', 'Guest created successfully.');
+        } else {
+            $values = $request->all();
+            $values['is_approved'] = true;
+            $values['expected_arrival_date'] = date('Y-m-d H:i:s');
+            Delivery::create($values);
+            return redirect()->route('tablets.index', ['type' => 'delivery'])->with('success', 'Delivery created successfully.');
+        }
     }
 
     /**

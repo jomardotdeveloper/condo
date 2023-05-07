@@ -21,6 +21,7 @@ return new class extends Migration
             $table->float('electric_fee')->default(0);
             $table->float('water_fee')->default(0);
             $table->float('penalty_fee')->default(0);
+            $table->float('recollection_fee')->default(0);
             $table->float('other_fee')->default(0);
             $table->text('description')->nullable();
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
@@ -29,6 +30,7 @@ return new class extends Migration
             $table->foreignId('move_out_id')->nullable()->constrained('move_outs')->onDelete('set null');
             $table->enum('type', [1,2,3]);
             $table->date('due_date');
+            $table->boolean('show_in_portal')->default(true);
             $table->timestamps();
         });
     }

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('number_of_guests')->nullable();
             $table->string('plate_number')->nullable();
             $table->dateTime('expected_arrival_date')->nullable();
+            $table->boolean('is_approved')->default(false);
             $table->timestamps();
         });
     }

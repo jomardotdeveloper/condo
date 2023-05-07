@@ -27,6 +27,9 @@
                 <div class="col-6 mt-2">
                     <x-select name="user_id" label="User" :options="$users" :is-required="true" :default-value="$ticket->user_id"/>
                 </div>
+                <div class="col-6 mt-2">
+                    <x-select name="status" label="Status" :options="$statuses" :is-required="true" :default-value="$ticket->status"/>
+                </div>
                 @endif
 
                 <div class="col-6">

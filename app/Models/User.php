@@ -97,6 +97,11 @@ class User extends Authenticatable
         return $this->application->unit->cluster->monthly_due_rate * $this->application->unit->floor_area;
     }
 
+    public function getRecollectionFeeAttribute()
+    {
+        return $this->application->unit->cluster->recollection_fee;
+    }
+
     public function getElectricFeeAttribute()
     {
         $readings = Reading::where('unit_id', $this->application->unit->id)->where('date_from', '>=', date('Y-m-01'))->where('date_to', '<=', date('Y-m-t'))->where("is_electricity", true)->get();

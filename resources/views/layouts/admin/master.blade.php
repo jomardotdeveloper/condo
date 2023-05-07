@@ -49,6 +49,8 @@
                                 <ul class="nk-quick-nav">
                                     @if(auth()->user()->user_type == App\Models\User::ADMIN)
                                         @include('layouts.admin.admin-dropdown')
+                                    @elseif(auth()->user()->user_type == App\Models\User::USER)
+                                        @include('layouts.admin.user-dropdown')
                                     @endif
                                 </ul>
                             </div>

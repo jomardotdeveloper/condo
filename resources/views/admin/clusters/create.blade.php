@@ -55,6 +55,10 @@
                     <x-input name="penalty_rate" label="Penalty Rate" type="number" :is-required="true"/>
                 </div>
 
+                <div class="col-6 mt-2">
+                    <x-input name="recollection_fee" label="Recollection Fee" type="number" :is-required="true"/>
+                </div>
+
                 <div class="col-12 mt-2">
                     <input type="submit" value="Submit" class="btn btn-primary" />
                 </div>

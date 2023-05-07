@@ -121,7 +121,7 @@
             array('name' => 'New Application', 'url' =>  route('dealers.index')  . '?status=1' ),
             array('name' => 'Accredited Vendors', 'url' =>  route('dealers.index')  . '?status=2'  ),
             array('name' => 'For Renewal', 'url' =>  route('dealers.index')  . '?status=3'  ),
-            array('name' => 'Bidding', 'url' =>  '#' ),
+            array('name' => 'Project Bidding', 'url' =>  route('projects.index') ),
             array('name' => 'Purchase Orders', 'url' =>  '#' ),
             array('name' => 'Vendor Invoices', 'url' =>  '#' ),
         ]"/>

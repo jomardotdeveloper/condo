@@ -69,7 +69,7 @@ async function onchangeCluster() {
     var cluster_id = $('#cluster_id').val();
 
     if(!cluster_id) {
-        $('#unit_towers').html("<option></option>");
+        $('#unit_tower').html("<option></option>");
         return;
     } 
 
@@ -78,14 +78,17 @@ async function onchangeCluster() {
     var options = "<option></option>";
 
     towers.data.forEach(function(tower) {
+        // alert(tower);
         options += "<option value='" + tower + "'>" + tower + "</option>";
     });
 
-    $('#unit_towers').html(options);
+    $('#unit_tower').html(options);
+
+    // alert(towers.data);
 }
 
 async function getTowers(cluster_id) {
-    var data = axios.get("clusters/unit-towers/" + cluster_id);
+    var data = axios.get("{{url('/')}}/admin/clusters/unit-towers/" + cluster_id);
     return data;
 }
 </script>

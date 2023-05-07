@@ -27,6 +27,9 @@
                 <div class="col-6 mt-2">
                     <x-select name="user_id" label="User" :options="$users" :is-required="true"/>
                 </div>
+                <div class="col-6 mt-2">
+                    <x-select name="status" label="Status" :options="$statuses" :is-required="true"/>
+                </div>
                 @endif
 
                 <div class="col-6">
@@ -37,9 +40,7 @@
                     <x-input name="attachment" label="Attachment" type="file" />
                 </div>
 
-                <div class="col-6 mt-2">
-                    <x-select name="status" label="Status" :options="$statuses" :is-required="true"/>
-                </div>
+                
 
                 <div class="col-12 mt-2">
                     <textarea class="form-control" name="description" required></textarea>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Traits\CommentTrait;
 use App\Models\Employee;
 use App\Models\Ticket;
 use App\Models\User;
@@ -10,6 +11,7 @@ use Illuminate\Http\Request;
 
 class TicketController extends Controller
 {
+    use CommentTrait;
     /**
      * Display a listing of the resource.
      */
@@ -67,7 +69,8 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        return view('admin.tickets.show', compact('ticket'));
+        $comments = $this->getAllComments(model : "ticket", modelId : $ticket->id);
+        return view('admin.tickets.show', compact('ticket', 'comments'));
     }
 
     /**

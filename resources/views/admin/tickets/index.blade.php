@@ -9,7 +9,7 @@
 
     {{-- TITLE --}}
     <x-datatable-head title="Tickets" description="You have {{ count($tickets) }} tickets"/>
-    
+
     {{-- ALERTS --}}
     @include('admin.includes.alerts')
 

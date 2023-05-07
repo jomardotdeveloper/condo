@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Traits\CommentTrait;
 use App\Models\Cluster;
 use App\Models\Parking;
 use App\Models\Unit;
@@ -10,6 +11,7 @@ use Illuminate\Http\Request;
 
 class ParkingController extends Controller
 {
+    use CommentTrait;
     /**
      * Display a listing of the resource.
      */
@@ -49,6 +51,7 @@ class ParkingController extends Controller
     {
         return view('admin.parkings.show', [
             'parking' => $parking,
+            'comments' => $this->getAllComments(model : "parking", modelId : $parking->id)
         ]);
     }
 

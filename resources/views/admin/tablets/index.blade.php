@@ -36,8 +36,8 @@
                             <th class="nk-tb-col tb-col-md"><span class="sub-text">ID Number Presented</span></th>
                             <th class="nk-tb-col tb-col-md"><span class="sub-text">Unit</span></th>
                             <th class="nk-tb-col tb-col-md"><span class="sub-text">Expected date & time of arrival</span></th>
-                            <th class="nk-tb-col nk-tb-col-tools text-end">
-                            </th>
+                            {{-- <th class="nk-tb-col nk-tb-col-tools text-end">
+                            </th> --}}
                         </tr>
                     </thead>
                     {{-- BODY --}}
@@ -62,13 +62,13 @@
                             <td class="nk-tb-col tb-col-md">
                                 {{ $guest->expected_arrival_date }}
                             </td>
-                            <x-datatable-action :items="[
+                            {{-- <x-datatable-action :items="[
                                 array('name' => 'View', 'url' => route('guests.show', $guest), 'icon'=> 'icon ni ni-eye'),
                                 array('name' => 'Edit', 'url' => route('guests.edit', $guest), 'icon'=> 'icon ni ni-pen'),
                                 array('name' => 'Delete', 
                                       'onclick' => 'deleteRecord(' . '`' . route('guests.destroy', ['guest' => $guest]) . '`' .')', 
                                       'icon'=> 'icon ni ni-trash'),
-                            ]"/>
+                            ]"/> --}}
                         </tr>
                         @endforeach
                     </tbody>
@@ -90,8 +90,8 @@
                             <th class="nk-tb-col"><span class="sub-text">Receiver</span></th>
                             <th class="nk-tb-col"><span class="sub-text">Reference number</span></th>
                             <th class="nk-tb-col"><span class="sub-text">Expected date & time of arrival</span></th>
-                            <th class="nk-tb-col nk-tb-col-tools text-end">
-                            </th>
+                            {{-- <th class="nk-tb-col nk-tb-col-tools text-end">
+                            </th> --}}
                         </tr>
                     </thead>
                     {{-- BODY --}}
@@ -116,13 +116,13 @@
                             <td class="nk-tb-col">
                                 {{ $delivery->expected_arrival_date }}
                             </td>
-                            <x-datatable-action :items="[
+                            {{-- <x-datatable-action :items="[
                                 array('name' => 'View', 'url' => route('deliveries.show', $delivery), 'icon'=> 'icon ni ni-eye'),
                                 array('name' => 'Edit', 'url' => route('deliveries.edit', $delivery), 'icon'=> 'icon ni ni-pen'),
                                 array('name' => 'Delete', 
                                       'onclick' => 'deleteRecord(' . '`' . route('deliveries.destroy', ['delivery' => $delivery]) . '`' .')', 
                                       'icon'=> 'icon ni ni-trash'),
-                            ]"/>
+                            ]"/> --}}
                         </tr>
                         @endforeach
                     </tbody>

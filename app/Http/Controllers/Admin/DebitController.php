@@ -86,10 +86,11 @@ class DebitController extends Controller
             $move_out->status = Application::FOR_PAYMENT;
             $move_out->save();
         }
+
         $values = $request->all();
         if(intval($request->type) == Debit::MONTHLY_DUE)
         {
-            
+            $values['show_in_portal'] = $request->show_in_portal == '1' ? true : false;
             $values['customer_name'] = User::find($request->user_id)->application->full_name;
         }
             
@@ -123,7 +124,10 @@ class DebitController extends Controller
      */
     public function update(Request $request, Debit $debit)
     {
-        $debit->update($request->all());
+
+        $values = $request->all();
+        $values["show_in_portal"] = $request->show_in_portal == '1' ? true : false;
+        $debit->update($values);
 
         return redirect()->route('debits.index')->with('success', 'Invoice updated successfully');
         

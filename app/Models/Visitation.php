@@ -28,6 +28,7 @@ class Visitation extends Model
         'number_of_guests',
         'plate_number',
         'expected_arrival_date',
+        'is_approved'
     ];
 
     public function visitor()

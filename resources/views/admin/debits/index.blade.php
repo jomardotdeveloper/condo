@@ -30,6 +30,7 @@
                         <th class="nk-tb-col"><span class="sub-text">Total Amount</span></th>
                         <th class="nk-tb-col"><span class="sub-text">Due Date</span></th>
                         <th class="nk-tb-col"><span class="sub-text">Paid</span></th>
+                        <th class="nk-tb-col"><span class="sub-text">Show In Portal</span></th>
                         <th class="nk-tb-col nk-tb-col-tools text-end">
                         </th>
                     </tr>
@@ -53,7 +54,9 @@
                         <td class="nk-tb-col">
                             {{ $debit->is_paid ? 'Yes' : 'No' }}
                         </td>
-
+                        <td class="nk-tb-col">
+                            {{ $debit->show_in_portal ? 'Yes' : 'No' }}
+                        </td>
                         <?php
                             $actions = [
                                 array('name' => 'View', 'url' => route('debits.show', $debit), 'icon'=> 'icon ni ni-eye'),

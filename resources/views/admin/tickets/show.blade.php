@@ -32,6 +32,8 @@
             
         </div>
     </div>
+
+    <x-comment model="ticket" :record=" $ticket->id " :comments="$comments" />
 </div>
 
 @endsection

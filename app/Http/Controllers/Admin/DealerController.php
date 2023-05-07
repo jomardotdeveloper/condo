@@ -70,6 +70,9 @@ class DealerController extends Controller
 
         Dealer::create($values);
 
+        if($request->from_frontend)
+            return redirect()->route('vendor.application', ['success' => 1]);
+
         return redirect()->route('dealers.index', ['status' => 1])->with('success', 'Dealer successfully created.');
     }
 

@@ -47,6 +47,12 @@
                     <x-input name="notes" label="Notes" type="text" />
                 </div>
 
+                @if (auth()->user()->user_type == 2)
+                <div class="col-6">
+                    <x-select name="is_approved" label="Approved" :options="[['id' => 1, 'name' => 'YES'], ['id' => 2, 'name' => 'NO']]"  :is-required="true"/>
+                </div>    
+                @endif
+              
                 <div class="col-6">
                     <x-input name="expected_arrival_date" label="Expected Arrival Date" type="datetime-local" />
                 </div>

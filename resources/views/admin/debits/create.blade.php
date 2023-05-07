@@ -25,7 +25,7 @@
                 <div class="col-6">
                     <x-input name="due_date" label="Due Date" type="date" :is-required="true"/>
                 </div>
-
+                
 
                 {{-- MONTHLY DUES --}}
                 @if ($_GET['type'] == 3)
@@ -48,8 +48,15 @@
                         <x-input name="penalty_fee" label="Penalty" type="number" :is-required="true" :default-value="$user ? $user->penalty_fee : 0"/>
                     </div>
                     <div class="col-6">
+                        <x-input name="recollection_fee" label="Recollection Fee" type="number" :is-required="true" :default-value="$user ? $user->recollection_fee : 0"/>
+                    </div>
+                    <div class="col-6">
                         <x-input name="other_fee" label="Other" type="number" :is-required="true" :default-value="0"/>
                     </div>
+                    <div class="col-6">
+                        <x-select name="show_in_portal" label="Show In Portal" :options="[['id' => 1, 'name' => 'YES'], ['id' => 2, 'name' => 'NO']]"  :is-required="true"/>
+                    </div>
+    
                     <div class="col-6">
                         <x-input name="description" label="Internal Notes" type="text" />
                     </div>

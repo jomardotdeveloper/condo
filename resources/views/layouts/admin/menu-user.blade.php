@@ -5,6 +5,20 @@
         </li>
         <x-menu name="Dashboard" logo="icon ni ni-growth-fill" url="{{ route('admin.dashboard') }}"/>
         <x-menu name="Tickets" logo="icon ni ni-ticket-fill" url="{{ route('tickets.index') }}"/>
+        <x-menu name="Invoices" logo="icon ni ni-file-docs" url="{{ route('user-debits.index') }}"/>
+        {{-- <x-menu name="Payments" logo="icon ni ni-wallet-fill" url="{{ route('user-payments.index') }}"/> --}}
+
+        <x-menu name="Guests" logo="icon ni ni-users-fill" url="#" :is-parent="true" :children="[
+            array('name' => 'All', 'url' =>  route('guests.index')),
+            array('name' => 'Incoming', 'url' =>  route('guests.index', ['today' => '1'])),
+        ]"/>
+
+        <x-menu name="Deliveries" logo="icon ni ni-box" url="#" :is-parent="true" :children="[
+            array('name' => 'All', 'url' =>  route('deliveries.index')),
+            array('name' => 'Incoming', 'url' =>  route('deliveries.index', ['today' => '1'])),
+        ]"/>
+
+        <x-menu name="Parking" logo="icon ni ni-truck" url="{{ route('user-parkings.index') }}"/>  
 
         {{-- <li class="nk-menu-heading">
             <h6 class="overline-title text-primary-alt">Permits</h6>

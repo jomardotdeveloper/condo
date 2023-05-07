@@ -29,7 +29,9 @@ class Debit extends Model
         'move_out_id',
         'type',
         'customer_name',
-        'user_id'
+        'user_id',
+        'recollection_fee',
+        'show_in_portal'
     ];
 
     public function user()
