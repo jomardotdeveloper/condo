@@ -32,8 +32,11 @@ if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php'))
 | into the script here so we don't need to manually load our classes.
 |
 */
+// ORIGINAL PATH
+// require __DIR__.'/../vendor/autoload.php';
 
-require __DIR__.'/../vendor/autoload.php';
+// MODIFIED PATH
+require __DIR__.'/../condo/vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -45,8 +48,11 @@ require __DIR__.'/../vendor/autoload.php';
 | to this client's browser, allowing them to enjoy our application.
 |
 */
+// ORIGINAL PATH
+// $app = require_once __DIR__.'/../bootstrap/app.php';
 
-$app = require_once __DIR__.'/../bootstrap/app.php';
+// MODIFIED PATH
+$app = require_once __DIR__.'/../condo/bootstrap/app.php';
 
 $kernel = $app->make(Kernel::class);
 
