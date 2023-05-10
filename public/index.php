@@ -36,7 +36,7 @@ if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php'))
 // require __DIR__.'/../vendor/autoload.php';
 
 // MODIFIED PATH
-require __DIR__.'/../condo/vendor/autoload.php';
+require __DIR__.'/../../condo/vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -52,7 +52,7 @@ require __DIR__.'/../condo/vendor/autoload.php';
 // $app = require_once __DIR__.'/../bootstrap/app.php';
 
 // MODIFIED PATH
-$app = require_once __DIR__.'/../condo/bootstrap/app.php';
+$app = require_once __DIR__.'/../../condo/bootstrap/app.php';
 
 $kernel = $app->make(Kernel::class);
 
