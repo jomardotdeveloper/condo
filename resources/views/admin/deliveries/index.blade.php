@@ -23,6 +23,9 @@
                 {{-- HEAD --}}
                 <thead>
                     <tr class="nk-tb-item nk-tb-head">
+                        <th class="nk-tb-col"><span class="sub-text">Date Created</span></th>
+                        <th class="nk-tb-col"><span class="sub-text">Cluster</span></th>
+                        <th class="nk-tb-col"><span class="sub-text">Floor</span></th>
                         <th class="nk-tb-col"><span class="sub-text">Type</span></th>
                         <th class="nk-tb-col"><span class="sub-text">From</span></th>
                         <th class="nk-tb-col"><span class="sub-text">Unit</span></th>
@@ -37,6 +40,15 @@
                 <tbody>
                     @foreach ($deliveries as $delivery)
                     <tr class="nk-tb-item">
+                        <td class="nk-tb-col">
+                            {{ $delivery->created_at }}
+                        </td>
+                        <td class="nk-tb-col">
+                            {{ $delivery->unit->cluster->name }}
+                        </td>
+                        <td class="nk-tb-col">
+                            {{ $delivery->unit->unit_floor }}
+                        </td>
                         <td class="nk-tb-col">
                             {{ $delivery->type_name }}
                         </td>

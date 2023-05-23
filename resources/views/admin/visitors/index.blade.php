@@ -24,6 +24,9 @@
                 {{-- HEAD --}}
                 <thead>
                     <tr class="nk-tb-item nk-tb-head">
+                        <th class="nk-tb-col"><span class="sub-text">Date Created</span></th>
+                        <th class="nk-tb-col"><span class="sub-text">Cluster</span></th>
+                        <th class="nk-tb-col"><span class="sub-text">Floor</span></th>
                         <th class="nk-tb-col"><span class="sub-text">Visitor</span></th>
                         <th class="nk-tb-col"><span class="sub-text">Address</span></th>
                         <th class="nk-tb-col"><span class="sub-text">ID Presented</span></th>
@@ -38,6 +41,15 @@
                 <tbody>
                     @foreach ($guests as $guest)
                     <tr class="nk-tb-item">
+                        <td class="nk-tb-col">
+                            {{ $guest->created_at }}
+                        </td>
+                        <td class="nk-tb-col">
+                            {{ $guest->unit->cluster->name }}
+                        </td>
+                        <td class="nk-tb-col">
+                            {{ $guest->unit->unit_floor }}
+                        </td>
                         <td class="nk-tb-col">
                             {{ $guest->visitor->full_name }}
                         </td>

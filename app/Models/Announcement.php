@@ -13,6 +13,7 @@ class Announcement extends Model
         'title',
         'description',
         'user_id',
+        'file_src'
     ];
 
     public function user()

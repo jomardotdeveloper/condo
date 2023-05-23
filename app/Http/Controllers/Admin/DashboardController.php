@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Announcement;
 use App\Models\Cluster;
 use App\Models\Debit;
 use App\Models\Delivery;
@@ -23,6 +24,7 @@ class DashboardController extends Controller
         $guests = 0;
         $deliveries = 0;
         $tickets = 0;
+        $announcement = null;
 
 
         if (auth()->user()->user_type == User::ADMIN) {
@@ -38,6 +40,9 @@ class DashboardController extends Controller
             $deliveries = Delivery::where('unit_id', auth()->user()->application->unit->id)->count();
             $tickets = Ticket::where('user_id', auth()->user()->id)->count();
         }
+
+        $latestAnnouncement  = Announcement::orderBy('created_at', 'desc')->first();
+
         // $billReadingDay = 15;
         // $dueDate = 7;
 
@@ -47,7 +52,7 @@ class DashboardController extends Controller
         // else
         //     dd(Carbon::now()->format('Y-m-d');
         // // dd(Carbon::now()->addMonth()->format('Y-m-d'));
-        return view('admin.dashboard', compact('debits', 'clusters', 'units', 'guests', 'deliveries', 'tickets'));
+        return view('admin.dashboard', compact('debits', 'clusters', 'units', 'guests', 'deliveries', 'tickets',  'latestAnnouncement'));
     }
 
     private function getAllUserDebits()

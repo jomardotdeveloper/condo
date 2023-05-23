@@ -8,8 +8,12 @@ return [
     ],
 
     'unit_types' => [
-        1 => 'Residential', 
-        2 => 'Commercial'
+        1 => 'Residential Studio Type', 
+        2 => 'Commercial',
+        3 => 'Residential 1 Bedroom',
+        4 => 'Residential 2 Bedroom',
+        5 => 'Residential 3 Bedroom',
+        6 => 'Residential 4 Bedroom',
     ],
 
     'unit_status' => [
