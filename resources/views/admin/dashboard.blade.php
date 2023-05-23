@@ -165,6 +165,7 @@
                         </div>
                         
                     </div>
+                    @if($latestAnnouncement)
                     <div class="card-title-group align-start mb-2">
                         <div class="card-title">
                             <h6 class="title">{{ $latestAnnouncement->title }}</h6>
@@ -172,7 +173,7 @@
                         </div>
                     </div>
                     {!! $latestAnnouncement->description  !!}
-    
+                    @endif
                 </div>
             </div>
         </div><!-- .col -->
