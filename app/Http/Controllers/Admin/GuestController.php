@@ -17,6 +17,7 @@ class GuestController extends Controller
      */
     public function index()
     {
+        // THIS IS A COMMENT
         $guests = Visitation::all();
         if(auth()->user()->user_type == User::USER) {
             $guests = Visitation::where('unit_id', auth()->user()->application->unit_id)->get()->all();
